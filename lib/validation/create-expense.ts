@@ -16,7 +16,7 @@ export const createExpenseSchema = z.object({
     .min(1, 'מקצוע הוא שדה חובה.')
     .regex(/^[א-תa-zA-Z\s]+$/, 'מקצוע יכול להכיל רק אותיות בעברית ואנגלית.'),
 
-    amount: z.string().min(1, 'מחיר חייב להיות מספר חיובי.'),
+  amount: z.string().min(1, 'מחיר חייב להיות מספר חיובי.'),
 
   advance: z.string().min(1, 'מקדמה חייבת להיות מספר חיובי.'),
 

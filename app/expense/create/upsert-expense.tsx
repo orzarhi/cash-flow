@@ -38,9 +38,9 @@ export const UpsertExpense = () => {
       console.error(error);
       toast.error('אירעה שגיאה ביצירת הוצאה חדשה, אנא נסה שוב מאוחר יותר.');
     },
-    onSuccess: ({ success }) => {
+    onSuccess: ({ success, error }) => {
       if (!success) {
-        toast.error('אירעה שגיאה ביצירת הוצאה חדשה, אנא נסה שוב מאוחר יותר.');
+        toast.error(error);
         return;
       }
       toast.success('הוצאה חדשה נוצרה בהצלחה.');

@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col justify-center items-center min-h-screen text-center space-y-16 px-2">
-      <section className="w-full max-w-4xl px-4 mt-8 sm:mt-0">
+      <section className="w-full max-w-4xl px-4 mt-8 md:mt-0">
         <div className="flex justify-center gap-2 items-center">
           <Image
             src="/logo.webp"

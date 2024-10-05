@@ -17,6 +17,13 @@ export const createExpense = async (expense: CreateExpense) => {
       throw new Error('User not found');
     }
 
+    if(parseFloat(amount) < parseFloat(advance)) {
+      return {
+        success: false,
+        error: 'המקדמה לא יכולה להיות גבוהה מהמחיר.',
+      };
+    }
+
     await db.expense.create({
       data: {
         supplierName,
@@ -25,6 +32,7 @@ export const createExpense = async (expense: CreateExpense) => {
         amount: parseFloat(amount),
         deposit: parseFloat(advance),
         description,
+        remaining: parseFloat(amount) - parseFloat(advance),
         userId: user.id,
       },
     });

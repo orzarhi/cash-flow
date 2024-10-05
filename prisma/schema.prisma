@@ -34,6 +34,7 @@ model Expense {
   description  String?
   deposit      Float?
   workProgress Float?
+  remaining    Float?
 
   milestonePayment MilestonePayment[]
 

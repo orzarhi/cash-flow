@@ -30,8 +30,8 @@ export default function RootLayout({
                   success: '🎉',
                   error: '❌',
                 }}
+                dir="rtl"
                 duration={5000}
-                // richColors
               />
               <Navbar />
               {children}

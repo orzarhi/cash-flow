@@ -1,58 +1,50 @@
 import { buttonVariants } from '@/components/ui/button';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table';
-import { CirclePlus } from 'lucide-react';
+import { db } from '@/db';
+import { CirclePlus, Ghost } from 'lucide-react';
 import Link from 'next/link';
 
-export default function Page() {
-  const data = [
-    {
-      id: 1,
-      supplier: 'INV001',
-      paid: 3000,
-      amount: 5000,
-      remaining: 2000,
-    },
-    {
-      id: 2,
-      supplier: 'INV002',
-      paid: 2000,
-      amount: 4000,
-      remaining: 2000,
-    },
-    {
-      id: 3,
-      supplier: 'INV003',
-      paid: 1000,
-      amount: 3000,
-      remaining: 2000,
-    },
-    {
-      id: 4,
-      supplier: 'INV004',
-      paid: 4000,
-      amount: 6000,
-      remaining: 2000,
-    },
-    {
-      id: 5,
-      supplier: 'INV005',
-      paid: 5000,
-      amount: 7000,
-      remaining: 2000,
-    },
-  ];
+export default async function Page() {
+  const expenses = await db.expense.findMany();
+
+  if (!expenses.length) {
+    return (
+      <main className="min-h-screen space-y-12 mt-8">
+        <div className="flex justify-end">
+          <Link
+            href="/expense/create"
+            className={buttonVariants({
+              className: 'inline-flex gap-2',
+              variant: 'ghost',
+            })}
+          >
+            <CirclePlus className="size-5" />
+            הוצאה חדשה
+          </Link>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 mt-16">
+  <Ghost className="size-8 text-muted-foreground" />
+  <h3 className="text-xl font-semibold">אין כרגע הוצאות במערכת.</h3>
+  <p className="text-gray-500">כאשר יתווספו הוצאות חדשות, הן יופיעו כאן.</p>
+</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen space-y-8 mt-8">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold text-center">ההוצאות שלי</h1>
+        <h1 className="text-2xl font-semibold text-center">
+          ההוצאות שלי ({expenses.length})
+        </h1>
         <Link
           href="/expense/create"
           className={buttonVariants({
@@ -74,12 +66,12 @@ export default function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.supplier}</TableCell>
-              <TableCell >{row.paid}</TableCell>
-              <TableCell>{row.amount}</TableCell>
-              <TableCell className='text-right'>{row.remaining}</TableCell>
+          {expenses.map((expense) => (
+            <TableRow key={expense.id}>
+              <TableCell>{expense.supplierName}</TableCell>
+              <TableCell>{expense.deposit}</TableCell>
+              <TableCell>{expense.amount}</TableCell>
+              <TableCell className="text-right">{expense.remaining}</TableCell>
             </TableRow>
           ))}
         </TableBody>
