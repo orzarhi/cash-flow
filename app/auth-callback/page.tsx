@@ -15,7 +15,7 @@ export default function Page() {
     retryDelay: 500,
   });
 
-  if (data?.success) router.push('/dashboard');
+  if (data?.success) router.push('/');
 
   return (
     <div className="w-full min-h-screen mt-24 flex justify-center">

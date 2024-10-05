@@ -54,7 +54,7 @@ export const Menu = ({ userId }: MenuProps) => {
         {userId ? (
           <>
             <Link
-              href="/create-survey"
+              href="/expense/create"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <SquarePen className="size-4 my-auto text-black/80 dark:text-white/80" />

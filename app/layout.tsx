@@ -4,6 +4,7 @@ import { Providers } from '@/components/providers';
 import { Footer } from '@/components/footer';
 import { Recursive } from 'next/font/google';
 import { Navbar } from '@/components/navbar';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Recursive({ subsets: ['latin'] });
 
@@ -23,6 +24,15 @@ export default function RootLayout({
         <main className="container mx-auto p-2.5 flex flex-col min-h-[calc(100vh-3.5rem-1px)]">
           <div className="flex-1 flex flex-col h-full">
             <Providers>
+              <Toaster
+                position="bottom-right"
+                icons={{
+                  success: '🎉',
+                  error: '❌',
+                }}
+                duration={5000}
+                // richColors
+              />
               <Navbar />
               {children}
               <Footer />

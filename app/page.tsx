@@ -1,8 +1,12 @@
 import { buttonVariants } from '@/components/ui/button';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   return (
     <main className="flex flex-col justify-center items-center min-h-screen text-center space-y-16 px-2">
       <section className="w-full max-w-4xl px-4 mt-8 sm:mt-0">
@@ -70,9 +74,25 @@ export default function Home() {
           הצטרפו אלינו עכשיו, פתחו חשבון חינם ותתחילו לשלוט בהוצאות שלכם בקלות וביעילות.
         </p>
 
-        <Link href='/api/auth/login' className={buttonVariants({
-          className:'w-48 my-4 mb-8'
-        })}>התחל עכשיו</Link>
+        {!user?.id ? (
+          <Link
+            href="/api/auth/login"
+            className={buttonVariants({
+              className: 'w-48 my-4 mb-8',
+            })}
+          >
+            התחל עכשיו
+          </Link>
+        ) : (
+          <Link
+            href="/expense/create"
+            className={buttonVariants({
+              className: 'w-48 my-4 mb-8',
+            })}
+          >
+            התחל עכשיו
+          </Link>
+        )}
       </section>
     </main>
   );

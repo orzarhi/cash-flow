@@ -94,17 +94,21 @@ export const Navbar = async () => {
                 </a>
               </>
             )}
-            <div className="h-8 w-px bg-muted-foreground hidden sm:block" />
-            <Link
-              href="/create-survey"
-              prefetch
-              className={buttonVariants({
-                size: 'sm',
-                className: 'hidden sm:flex items-center gap-1',
-              })}
-            >
-              הוצאה חדשה
-            </Link>
+            {user?.id && (
+              <>
+                <div className="h-8 w-px bg-muted-foreground hidden sm:block" />
+                <Link
+                  href="/create-survey"
+                  prefetch
+                  className={buttonVariants({
+                    size: 'sm',
+                    className: 'hidden sm:flex items-center gap-1',
+                  })}
+                >
+                  הוצאה חדשה
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </MaxWidthWrapper>

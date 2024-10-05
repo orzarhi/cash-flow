@@ -27,13 +27,13 @@ model User {
 
 model Expense {
   id           String  @id @default(cuid())
-  name         String
-  title        String
+  supplierName String
+  phoneNumber  String
+  profession   String
   amount       Float
   description  String?
-  advance      Float?
+  deposit      Float?
   workProgress Float?
-  paid         Float?
 
   milestonePayment MilestonePayment[]
 
@@ -45,10 +45,10 @@ model Expense {
 }
 
 model MilestonePayment {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   title       String
-  amount      Float
+  paidAmount  Float
   description String?
   paymentType PAYMENT
 
