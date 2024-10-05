@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { MaxWidthWrapper } from './max-width-wrapper';
 import { Menu } from './menu';
@@ -11,13 +11,12 @@ export const Navbar = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  
   return (
     <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-200 dark:border-b-zinc-600 backdrop-blur-lg transition-all">
       <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="flex z-40 font-semibold">
-            feed<span className="text-primary">back</span>
+            <Image src="/logo.webp" alt="toolCash logo" width={24} height={24} />
           </Link>
 
           {user?.id && (
@@ -41,7 +40,7 @@ export const Navbar = async () => {
                     variant: 'ghost',
                   })}
                 >
-                  Dashboard ✨
+                  מרכז ניהול ✨
                 </Link>
                 <Link
                   href="/profile"
@@ -50,16 +49,7 @@ export const Navbar = async () => {
                     variant: 'ghost',
                   })}
                 >
-                  Profile
-                </Link>
-                <Link
-                  href="/plans"
-                  className={buttonVariants({
-                    size: 'sm',
-                    variant: 'ghost',
-                  })}
-                >
-                  Plans & Pricing
+                  איזור אישי
                 </Link>
                 <Link
                   href="/about"
@@ -68,7 +58,7 @@ export const Navbar = async () => {
                     variant: 'ghost',
                   })}
                 >
-                  About Us
+                  אודות
                 </Link>
                 <a
                   href="/api/auth/logout"
@@ -78,7 +68,7 @@ export const Navbar = async () => {
                     className: 'relative left-4 sm:left-0',
                   })}
                 >
-                  Sign out
+                  יציאה
                 </a>
               </>
             ) : (
@@ -90,7 +80,7 @@ export const Navbar = async () => {
                     variant: 'ghost',
                   })}
                 >
-                  Sign up
+                  הרשמה
                 </a>
 
                 <a
@@ -100,7 +90,7 @@ export const Navbar = async () => {
                     variant: 'ghost',
                   })}
                 >
-                  Login
+                  התחברות
                 </a>
               </>
             )}
@@ -113,8 +103,7 @@ export const Navbar = async () => {
                 className: 'hidden sm:flex items-center gap-1',
               })}
             >
-              Get started
-              <ArrowRight className="size-5 ml-1.5" />
+              הוצאה חדשה
             </Link>
           </div>
         </div>

@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils';
 import {
-  BadgeDollarSign,
   LayoutDashboard,
   LogOut,
   Menu as MenuIcon,
@@ -12,8 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface MenuProps {
   userId?: string;
@@ -60,55 +58,49 @@ export const Menu = ({ userId }: MenuProps) => {
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <SquarePen className="size-4 my-auto text-black/80 dark:text-white/80" />
-              Create Survey
+              הוצאה חדשה
             </Link>
             <Link
               href="/dashboard"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <LayoutDashboard className="size-4 my-auto text-black/80 dark:text-white/80" />
-              Dashboard
+              מרכז ניהול
             </Link>
             <Link
               href="/profile"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <User className="size-4 my-auto text-black/80 dark:text-white/80" />
-              Profile
+              איזור אישי
             </Link>
-            <Link
-              href="/plans"
-              className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
-            >
-              <BadgeDollarSign className="size-4 my-auto text-black/80 dark:text-white/80" />
-              Plans & Pricing
-            </Link>
+
             <Link
               href="/about"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <Sofa className="size-4 my-auto text-black/80 dark:text-white/80" />
-              About Us
+              אודות
             </Link>
             <a
               href="/api/auth/logout"
               className="flex gap-1.5 px-4 py-2 border-b border-zinc-200 dark:border-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <LogOut className="size-4 my-auto text-black/80 dark:text-white/80 " />
-              Sign out
+              יציאה
             </a>
           </>
         ) : (
           <>
             <a href="/api/auth/register" className="block px-4 py-2">
-              Sign up
+              הרשמה
             </a>
 
             <a
               href="/api/auth/login"
               className="block px-4 py-2 border-b border-zinc-200 dark:border-zinc-800"
             >
-              Login
+              התחברות
             </a>
           </>
         )}
