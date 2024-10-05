@@ -54,10 +54,7 @@ export default async function Page({ params }: PageProps) {
           <p>{expense.profession}</p>
         </div>
 
-        <div className="flex justify-between">
-          <h2 className="font-medium">סכום כולל:</h2>
-          <p>{formatPrice(expense.amount)}</p>
-        </div>
+     
 
         <div className="flex justify-between">
           <h2 className="font-medium">מקדמה:</h2>
@@ -70,8 +67,13 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <div className="flex justify-between">
+          <h2 className="font-medium">סכום כולל:</h2>
+          <p>{formatPrice(expense.amount)}</p>
+        </div>
+        
+        <div className="flex justify-between">
           <h2 className="font-medium">תהליך התקדמות:</h2>
-          <p>{expense.workProgress ?? 'No progress yet'}</p>
+          <p>{expense.workProgress ?? 'עדיין לא התחיל'}</p>
         </div>
 
         <div className="flex justify-between">

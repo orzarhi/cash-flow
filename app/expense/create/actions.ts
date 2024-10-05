@@ -32,6 +32,7 @@ export const createExpense = async (expense: CreateExpense) => {
         amount: parseFloat(amount),
         deposit: parseFloat(advance),
         description,
+        
         remaining: parseFloat(amount) - parseFloat(advance),
         userId: user.id,
       },
