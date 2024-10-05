@@ -3,16 +3,31 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
 import { db } from '@/db';
+import { formatPrice } from '@/lib/utils';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { CirclePlus, Ghost } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Page() {
-  const expenses = await db.expense.findMany();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  const expenses = await db.expense.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
 
   if (!expenses.length) {
     return (
@@ -31,10 +46,10 @@ export default async function Page() {
         </div>
 
         <div className="flex flex-col items-center gap-2 mt-16">
-  <Ghost className="size-8 text-muted-foreground" />
-  <h3 className="text-xl font-semibold">אין כרגע הוצאות במערכת.</h3>
-  <p className="text-gray-500">כאשר יתווספו הוצאות חדשות, הן יופיעו כאן.</p>
-</div>
+          <Ghost className="size-8 text-muted-foreground" />
+          <h3 className="text-xl font-semibold">אין כרגע הוצאות במערכת.</h3>
+          <p className="text-gray-500">כאשר יתווספו הוצאות חדשות, הן יופיעו כאן.</p>
+        </div>
       </main>
     );
   }
@@ -59,22 +74,37 @@ export default async function Page() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px] text-right">ספק</TableHead>
-            <TableHead className="text-right">שולם</TableHead>
-            <TableHead className="text-right">סכום</TableHead>
-            <TableHead className="text-right">נשאר</TableHead>
+            <TableHead className="text-right">שם הספק</TableHead>
+            <TableHead className="text-right">מקדמה שולמה</TableHead>
+            <TableHead className="text-right">יתרה לתשלום</TableHead>
+            <TableHead className="text-right">סכום כולל</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {expenses.map((expense) => (
             <TableRow key={expense.id}>
-              <TableCell>{expense.supplierName}</TableCell>
-              <TableCell>{expense.deposit}</TableCell>
-              <TableCell>{expense.amount}</TableCell>
-              <TableCell className="text-right">{expense.remaining}</TableCell>
-            </TableRow>
+            <TableCell>
+              <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
+            </TableCell>
+            <TableCell>
+              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.deposit ?? 0)}</Link>
+            </TableCell>
+            <TableCell className="text-right">
+              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.remaining ?? 0)}</Link>
+            </TableCell>
+            <TableCell>
+              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
+            </TableCell>
+          </TableRow>
+          
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>סה״כ הוצאות</TableCell>
+            <TableCell className="text-red-500">{formatPrice(totalExpenses)}</TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
     </main>
   );

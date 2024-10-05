@@ -32,9 +32,9 @@ model Expense {
   profession   String
   amount       Float
   description  String?
-  deposit      Float?
-  workProgress Float?
-  remaining    Float?
+  deposit      Float
+  workProgress Float
+  remaining    Float
 
   milestonePayment MilestonePayment[]
 
