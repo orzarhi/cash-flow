@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -68,7 +69,10 @@ export default function Home() {
         <p className="text-muted-foreground text-center mt-2 text-base md:text-lg">
           הצטרפו אלינו עכשיו, פתחו חשבון חינם ותתחילו לשלוט בהוצאות שלכם בקלות וביעילות.
         </p>
-        <Button className="w-48 my-4 mb-8">התחל עכשיו</Button>
+
+        <Link href='/api/auth/login' className={buttonVariants({
+          className:'w-48 my-4 mb-8'
+        })}>התחל עכשיו</Link>
       </section>
     </main>
   );
