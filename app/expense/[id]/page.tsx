@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DropdownOptions } from './dropdown-options';
+import { CollapsibleDescription } from './collapsible-description';
 interface PageProps {
   params: {
     id: string;
@@ -75,10 +76,7 @@ export default async function Page({ params }: PageProps) {
           <p>{expense.workProgress ?? '0%'}</p>
         </div>
 
-        <div className="flex justify-between">
-          <h2 className="font-medium">הערות:</h2>
-          <p>{expense.description ?? 'לא קיימות הערות'}</p>
-        </div>
+        <CollapsibleDescription description={expense.description} />
 
         <div className="flex justify-between">
           <h2 className="font-medium">תאריך יצירה:</h2>
