@@ -77,7 +77,7 @@ export const UpsertExpense = () => {
           type="number"
           id="phoneNumber"
           inputMode="numeric"
-          placeholder="מלא את מספר הטלפון (ללא מקף או רווחים)"
+          placeholder="מלא את מספר הטלפון. ללא מקף או רווחים (לא חובה)"
           {...register('phoneNumber')}
         />
         {errors.phoneNumber && (
@@ -122,7 +122,7 @@ export const UpsertExpense = () => {
           type="number"
           id="advance"
           inputMode="numeric"
-          placeholder="הכנס את סכום המקדמה"
+           placeholder="הכנס את סכום המקדמה (לא חובה)"
           {...register('advance')}
         />
         {errors.advance && <p className="error-message">{errors.advance.message}</p>}

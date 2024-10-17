@@ -30,12 +30,13 @@ export default async function Page({ params }: PageProps) {
   if (!expense) {
     return notFound();
   }
+  console.log(expense.description)
 
   return (
     <main className="min-h-screen space-y-8 sm:p-8">
       <div className="flex justify-between p-4 mt-2 sm:p-0 sm:mt-0 mb-4">
         <h1 className="text-2xl font-semibold text-center ">פרטי ההוצאה</h1>
-        <Ellipsis className='my-auto cursor-pointer'/>
+        <Ellipsis className="my-auto cursor-pointer" />
       </div>
 
       <div className="border w-full rounded-lg p-4 dark:shadow-zinc-400/5 shadow-md space-y-4">
@@ -46,7 +47,7 @@ export default async function Page({ params }: PageProps) {
 
         <div className="flex justify-between">
           <h2 className="font-medium">מספר טלפון:</h2>
-          <p>{expense.phoneNumber}</p>
+          <p>{expense.phoneNumber ?? 'לא קיים מספר טלפון'}</p>
         </div>
 
         <div className="flex justify-between">
@@ -54,11 +55,9 @@ export default async function Page({ params }: PageProps) {
           <p>{expense.profession}</p>
         </div>
 
-     
-
         <div className="flex justify-between">
           <h2 className="font-medium">מקדמה:</h2>
-          <p>{formatPrice(expense.deposit)}</p>
+          <p>{formatPrice(expense.deposit ?? 0)}</p>
         </div>
 
         <div className="flex justify-between">
@@ -70,15 +69,15 @@ export default async function Page({ params }: PageProps) {
           <h2 className="font-medium">סכום כולל:</h2>
           <p>{formatPrice(expense.amount)}</p>
         </div>
-        
+
         <div className="flex justify-between">
           <h2 className="font-medium">תהליך התקדמות:</h2>
-          <p>{expense.workProgress ?? 'עדיין לא התחיל'}</p>
+          <p>{expense.workProgress ?? '0%'}</p>
         </div>
 
         <div className="flex justify-between">
           <h2 className="font-medium">הערות:</h2>
-          <p>{expense.description}</p>
+          <p>{expense.description ?? 'לא קיימות הערות'}</p>
         </div>
 
         <div className="flex justify-between">

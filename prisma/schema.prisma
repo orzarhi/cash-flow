@@ -28,11 +28,11 @@ model User {
 model Expense {
   id           String  @id @default(cuid())
   supplierName String
-  phoneNumber  String
+  phoneNumber  String?
   profession   String
   amount       Float
   description  String?
-  deposit      Float
+  deposit      Float?
   workProgress Float?
   remaining    Float
 

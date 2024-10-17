@@ -27,8 +27,6 @@ export default async function Page() {
     },
   });
 
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
-
   if (!expenses.length) {
     return (
       <main className="min-h-screen space-y-12 mt-8">
@@ -53,6 +51,8 @@ export default async function Page() {
       </main>
     );
   }
+
+  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
 
   return (
     <main className="min-h-screen space-y-8 mt-8">
@@ -83,20 +83,23 @@ export default async function Page() {
         <TableBody>
           {expenses.map((expense) => (
             <TableRow key={expense.id}>
-            <TableCell>
-              <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
-            </TableCell>
-            <TableCell>
-              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.deposit ?? 0)}</Link>
-            </TableCell>
-            <TableCell className="text-right">
-              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.remaining ?? 0)}</Link>
-            </TableCell>
-            <TableCell>
-              <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
-            </TableCell>
-          </TableRow>
-          
+              <TableCell>
+                <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
+              </TableCell>
+              <TableCell>
+                <Link href={`/expense/${expense.id}`}>
+                  {formatPrice(expense.deposit ?? 0)}
+                </Link>
+              </TableCell>
+              <TableCell className="text-right">
+                <Link href={`/expense/${expense.id}`}>
+                  {formatPrice(expense.remaining ?? 0)}
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
         <TableFooter>

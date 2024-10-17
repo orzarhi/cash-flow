@@ -8,8 +8,9 @@ export const createExpenseSchema = z.object({
 
   phoneNumber: z
     .string()
-    .min(1, 'מספר טלפון הוא שדה חובה.')
-    .regex(/^[0-9]+$/, 'מספר טלפון יכול להכיל רק מספרים.'),
+    .optional()
+    .refine((value) => !value || /^\d+$/.test(value), 'מספר טלפון יכול להכיל רק מספרים.'
+  ),
 
   profession: z
     .string()
@@ -18,7 +19,7 @@ export const createExpenseSchema = z.object({
 
   amount: z.string().min(1, 'מחיר חייב להיות מספר חיובי.'),
 
-  advance: z.string().min(1, 'מקדמה חייבת להיות מספר חיובי.'),
+  advance: z.string().optional().refine((value) => !value || /^\d+$/.test(value), 'המקדמה חייב להיות מספר חיובי.'),
 
   description: z
     .string()
