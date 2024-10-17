@@ -3,9 +3,10 @@ import { db } from '@/db';
 import { formatPrice } from '@/lib/utils';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { format } from 'date-fns';
-import { ArrowLeft, Ellipsis } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DropdownOptions } from './dropdown-options';
 interface PageProps {
   params: {
     id: string;
@@ -30,13 +31,12 @@ export default async function Page({ params }: PageProps) {
   if (!expense) {
     return notFound();
   }
-  console.log(expense.description)
 
   return (
     <main className="min-h-screen space-y-8 sm:p-8">
       <div className="flex justify-between p-4 mt-2 sm:p-0 sm:mt-0 mb-4">
         <h1 className="text-2xl font-semibold text-center ">פרטי ההוצאה</h1>
-        <Ellipsis className="my-auto cursor-pointer" />
+        <DropdownOptions expenseId={expense.id} />
       </div>
 
       <div className="border w-full rounded-lg p-4 dark:shadow-zinc-400/5 shadow-md space-y-4">

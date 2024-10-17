@@ -5,17 +5,17 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { db } from '@/db';
 import { revalidatePath } from 'next/cache';
 
-export const createExpense = async (expense: CreateExpense) => {
+export const createExpenseAction = async (expense: CreateExpense) => {
   try {
-    const { supplierName, phoneNumber, profession, amount, advance, description } =
-      createExpenseSchema.parse(expense);
-
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
     if (!user) {
       throw new Error('User not found');
     }
+
+    const { supplierName, phoneNumber, profession, amount, advance, description } =
+      createExpenseSchema.parse(expense);
 
     if (advance && parseFloat(amount) < parseFloat(advance)) {
       return {
@@ -42,7 +42,8 @@ export const createExpense = async (expense: CreateExpense) => {
 
     return { success: true };
   } catch (error) {
-    console.error(error);
+    console.log(error);
+
     return {
       success: false,
       error: 'משהו השתבש, נסה שוב מאוחר יותר.',

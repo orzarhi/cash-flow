@@ -8,7 +8,7 @@ import { CreateExpense, createExpenseSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { createExpense } from './actions';
+import { createExpenseAction } from './actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -31,9 +31,9 @@ export const UpsertExpense = () => {
     },
   });
 
-  const { mutate: create, isPending } = useMutation({
+  const { mutate: createExpense, isPending } = useMutation({
     mutationKey: ['create-expense'],
-    mutationFn: createExpense,
+    mutationFn: createExpenseAction,
     onError: (error) => {
       console.error(error);
       toast.error('אירעה שגיאה ביצירת הוצאה חדשה, אנא נסה שוב מאוחר יותר.');
@@ -49,7 +49,7 @@ export const UpsertExpense = () => {
   });
 
   const onSubmit = (data: CreateExpense) => {
-    create(data);
+    createExpense(data);
   };
 
   return (

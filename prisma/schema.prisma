@@ -38,7 +38,7 @@ model Expense {
 
   milestonePayment MilestonePayment[]
 
-  user   User?   @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String?
 
   createdAt DateTime @default(now())
@@ -53,7 +53,7 @@ model MilestonePayment {
   description String?
   paymentType PAYMENT
 
-  expense   Expense? @relation(fields: [expenseId], references: [id])
+  expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   expenseId String?
 
   createdAt DateTime @default(now())
