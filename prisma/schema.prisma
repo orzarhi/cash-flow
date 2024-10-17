@@ -12,6 +12,7 @@ enum PAYMENT {
   CARD
   CHECK
   TRANSFER
+  OTHER
 }
 
 model User {
@@ -46,12 +47,12 @@ model Expense {
 }
 
 model MilestonePayment {
-  id          String  @id @default(cuid())
-  name        String
+  id          String   @id @default(cuid())
   title       String
   paidAmount  Float
   description String?
   paymentType PAYMENT
+  date        DateTime
 
   expense   Expense? @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   expenseId String?

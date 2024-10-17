@@ -27,11 +27,25 @@ export default async function Page({ params }: PageProps) {
       userId: user.id,
       id: params.id,
     },
+    select:{
+      id: true,
+      supplierName: true,
+      phoneNumber: true,
+      profession: true,
+      deposit: true,
+      remaining: true,
+      milestonePayment: true,
+      amount: true,
+      workProgress: true,
+      description: true,
+      createdAt: true,
+    }
   });
 
   if (!expense) {
     return notFound();
   }
+  console.log('🚀 ~ Page ~ expense:', expense);
 
   return (
     <main className="min-h-screen space-y-8 sm:p-8">

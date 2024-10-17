@@ -35,7 +35,6 @@ export const ResponsiveDialog = ({
   description,
   textCenter,
 }: ResponsiveDialogProps) => {
-    
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   if (isDesktop) {
@@ -47,13 +46,7 @@ export const ResponsiveDialog = ({
           })}
         >
           <DialogHeader>
-            <DialogTitle
-              className={cn('', {
-                'text-center': textCenter,
-              })}
-            >
-              {title}
-            </DialogTitle>
+            <DialogTitle className="text-center">{title}</DialogTitle>
             {description && (
               <DialogDescription
                 className={cn('!text-muted-foreground', {
@@ -72,13 +65,13 @@ export const ResponsiveDialog = ({
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerContent>
+      <DrawerContent className='z-[10000]'>
         <DrawerHeader
           className={cn('text-left', {
             'text-center': textCenter,
           })}
         >
-          <DrawerTitle>{title}</DrawerTitle>
+          <DrawerTitle className='text-center'>{title}</DrawerTitle>
           {description && (
             <DialogDescription className="text-muted-foreground">
               {description}
