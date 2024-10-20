@@ -9,8 +9,7 @@ export const createExpenseSchema = z.object({
   phoneNumber: z
     .string()
     .optional()
-    .refine((value) => !value || /^\d+$/.test(value), 'מספר טלפון יכול להכיל רק מספרים.'
-  ),
+    .refine((value) => !value || /^\d+$/.test(value), 'מספר טלפון יכול להכיל רק מספרים.'),
 
   profession: z
     .string()
@@ -19,10 +18,14 @@ export const createExpenseSchema = z.object({
 
   amount: z.string().min(1, 'מחיר חייב להיות מספר חיובי.'),
 
-  advance: z.string().optional().refine((value) => !value || /^\d+$/.test(value), 'המקדמה חייב להיות מספר חיובי.'),
+  advance: z
+    .string()
+    .optional()
+    .refine((value) => !value || /^\d+$/.test(value), 'המקדמה חייב להיות מספר חיובי.'),
 
   description: z
     .string()
+    .max(255, 'הערות יכולות להכיל עד 255 תווים.')
     .optional()
     .refine(
       (value) => !value || /^[א-תa-zA-Z0-9\s.,-_]*$/.test(value),

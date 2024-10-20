@@ -1,6 +1,6 @@
 'use client';
 
-import { DatePicker } from '@/components/date-picker';
+import { DatePicker } from '@/app/milestone-payment/[id]/date-picker';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { CreateMilestone, createMilestonePaymentSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PAYMENT } from '@prisma/client';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const LABEL_MAP: Record<PAYMENT, string> = {
@@ -26,9 +27,13 @@ const LABEL_MAP: Record<PAYMENT, string> = {
 };
 
 export const Form = () => {
+  const [paymentType, setPaymentType] = useState<PAYMENT | undefined>(undefined);
+
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<CreateMilestone>({
     resolver: zodResolver(createMilestonePaymentSchema),
@@ -78,7 +83,11 @@ export const Form = () => {
         <Label htmlFor="paymentType" className="font-semibold">
           אופן תשלום
         </Label>
-        <Select dir="rtl">
+        <Select
+          dir="rtl"
+          value={paymentType}
+          onValueChange={(value) => setPaymentType(value as PAYMENT)}
+        >
           <SelectTrigger className="w-full ">
             <SelectValue placeholder="בחר אופן תשלום" />
           </SelectTrigger>
@@ -96,7 +105,12 @@ export const Form = () => {
         <Label htmlFor="date" className="font-semibold">
           תאריך
         </Label>
-        <DatePicker className="w-full justify-start text-left font-normal" />
+        <DatePicker
+          className="w-full justify-start text-left font-normal"
+          setValue={setValue}
+          watch={watch}
+          errors={errors}
+        />
       </div>
 
       <div className="space-y-1.5">

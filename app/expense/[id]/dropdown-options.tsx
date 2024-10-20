@@ -7,10 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useMutation } from '@tanstack/react-query';
+import { useDeleteExpense } from '@/hooks/use-expense';
 import { Ellipsis, Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
-import { deleteExpenseAction } from './actions';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 interface DropdownOptionsProps {
@@ -20,32 +18,13 @@ interface DropdownOptionsProps {
 export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
   const router = useRouter();
 
-  const { mutate: deleteExpense, isPending } = useMutation({
-    mutationKey: ['delete-expense'],
-    mutationFn: deleteExpenseAction,
-    onError: (error) => {
-      console.error(error);
-      toast.error('אירעה שגיאה במחיקת הוצאה, אנא נסה שוב מאוחר יותר.');
-    },
-    onSuccess: ({ success, error }) => {
-      if (!success) {
-        toast.error(error);
-        return;
-      }
-      toast.success('ההוצאה נמחקה בהצלחה.');
-      router.push('/dashboard');
-    },
-  });
+  const { mutate: deleteExpense, isPending } = useDeleteExpense();
 
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="flex p-0"
-          >
+          <Button variant="ghost" size="icon"  className="flex p-0">
             {isPending ? (
               <Loader2 className="size-5 animate-spin shrink-0" />
             ) : (
@@ -57,7 +36,7 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
         <DropdownMenuContent className="p-0 mx-1.5">
           <DropdownMenuItem
             className="flex p-2.5"
-            onClick={() => router.push(`/expense/create/payment/${expenseId}`)}
+            onClick={() => router.push(`/milestone-payment/${expenseId}`)}
           >
             <Plus className="size-5" />
             <span className="mx-2 ml-auto">מפרעה</span>

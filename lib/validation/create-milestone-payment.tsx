@@ -24,6 +24,7 @@ export const createMilestonePaymentSchema = z.object({
 
   description: z
     .string()
+    .max(255, 'הערות יכולות להכיל עד 255 תווים.')
     .optional()
     .refine(
       (value) => !value || /^[א-תa-zA-Z0-9\s.,-_]*$/.test(value),
