@@ -45,10 +45,9 @@ export default async function Page({ params }: PageProps) {
   if (!expense) {
     return notFound();
   }
-  console.log('🚀 ~ Page ~ expense:', expense);
 
   return (
-    <main className="min-h-screen space-y-8 sm:p-8">
+    <main className="min-h-screen space-y-14 sm:p-8">
       <div className="flex justify-between p-4 mt-2 sm:p-0 sm:mt-0 mb-4">
         <h1 className="text-2xl font-semibold text-center ">פרטי ההוצאה</h1>
         <DropdownOptions expenseId={expense.id} />

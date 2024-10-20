@@ -72,17 +72,17 @@ export default async function Page() {
             variant: 'ghost',
           })}
         >
-          <CirclePlus className="size-5" />
+          <CirclePlus className="size-5 shrink-0" />
           הוצאה חדשה
         </Link>
       </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-right">שם הספק</TableHead>
+            <TableHead className="text-right">שם</TableHead>
             <TableHead className="text-right">סכום כולל</TableHead>
             <TableHead className="text-right">מקדמה</TableHead>
-            <TableHead className="text-right">יתרה לתשלום</TableHead>
+            <TableHead className="text-right">יתרה</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

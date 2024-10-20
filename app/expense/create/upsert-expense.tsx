@@ -145,7 +145,7 @@ export const UpsertExpense = () => {
 
       <div>
         <Button
-          className="w-44 mt-4"
+          className="w-44"
           disabled={isPending}
           isLoading={isPending}
           loadingText="נוצרת הוצאה חדשה"

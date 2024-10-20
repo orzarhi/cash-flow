@@ -12,8 +12,6 @@ import { Ellipsis, Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 import { deleteExpenseAction } from './actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { MilestonePayment } from './milestone-payment';
 
 interface DropdownOptionsProps {
   expenseId: string;
@@ -21,9 +19,6 @@ interface DropdownOptionsProps {
 
 export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
   const router = useRouter();
-
-  const [milestonePaymentModalOpen, setMilestonePaymentModalOpen] =
-    useState<boolean>(false);
 
   const { mutate: deleteExpense, isPending } = useMutation({
     mutationKey: ['delete-expense'],
@@ -52,9 +47,9 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
             className="flex size-8 p-0 data-[state=open]:bg-muted"
           >
             {isPending ? (
-              <Loader2 className="size-5 animate-spin" />
+              <Loader2 className="size-5 animate-spin shrink-0" />
             ) : (
-              <Ellipsis className="size-5" />
+              <Ellipsis className="size-5 shrink-0" />
             )}
             <span className="sr-only">Open menu</span>
           </Button>
@@ -62,7 +57,7 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
         <DropdownMenuContent className="p-0 mx-1.5">
           <DropdownMenuItem
             className="flex p-2.5"
-            onClick={() => setMilestonePaymentModalOpen(true)}
+            onClick={() => router.push(`/expense/create/payment/${expenseId}`)}
           >
             <Plus className="size-5" />
             <span className="mx-2 ml-auto">מפרעה</span>
@@ -82,12 +77,6 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* Milestone payment modal */}
-      <MilestonePayment
-        openModal={milestonePaymentModalOpen}
-        setOpenModal={setMilestonePaymentModalOpen}
-      />
     </>
   );
 };
