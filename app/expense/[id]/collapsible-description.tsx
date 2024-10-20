@@ -1,6 +1,7 @@
 'use client';
 
 import { ResponsiveDialog } from '@/components/responsive-dialog';
+import { cn } from '@/lib/utils';
 import React, { useState } from 'react';
 
 interface CollapsibleDescriptionProps {
@@ -16,7 +17,9 @@ export const CollapsibleDescription = ({ description }: CollapsibleDescriptionPr
         <h2 className="font-medium">הערות:</h2>
         {description ? (
           <p
-            className="truncate cursor-pointer w-36 sm:w-48"
+            className={cn('', {
+              'truncate cursor-pointer w-36 sm:w-48': description.length > 50,
+            })}
             onClick={() => setModalOpen(true)}
           >
             {description ?? 'לא קיימות הערות'}

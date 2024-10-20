@@ -27,7 +27,7 @@ export default async function Page({ params }: PageProps) {
       userId: user.id,
       id: params.id,
     },
-    select:{
+    select: {
       id: true,
       supplierName: true,
       phoneNumber: true,
@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
       workProgress: true,
       description: true,
       createdAt: true,
-    }
+    },
   });
 
   if (!expense) {
@@ -71,6 +71,11 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <div className="flex justify-between">
+          <h2 className="font-medium">סכום כולל:</h2>
+          <p>{formatPrice(expense.amount)}</p>
+        </div>
+
+        <div className="flex justify-between">
           <h2 className="font-medium">מקדמה:</h2>
           <p>{formatPrice(expense.deposit ?? 0)}</p>
         </div>
@@ -78,11 +83,6 @@ export default async function Page({ params }: PageProps) {
         <div className="flex justify-between">
           <h2 className="font-medium">יתרה לתשלום:</h2>
           <p>{formatPrice(expense.remaining)}</p>
-        </div>
-
-        <div className="flex justify-between">
-          <h2 className="font-medium">סכום כולל:</h2>
-          <p>{formatPrice(expense.amount)}</p>
         </div>
 
         <div className="flex justify-between">

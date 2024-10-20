@@ -75,9 +75,9 @@ export default async function Page() {
         <TableHeader>
           <TableRow>
             <TableHead className="text-right">שם הספק</TableHead>
-            <TableHead className="text-right">מקדמה שולמה</TableHead>
-            <TableHead className="text-right">יתרה לתשלום</TableHead>
             <TableHead className="text-right">סכום כולל</TableHead>
+            <TableHead className="text-right">מקדמה</TableHead>
+            <TableHead className="text-right">יתרה לתשלום</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -85,6 +85,9 @@ export default async function Page() {
             <TableRow key={expense.id}>
               <TableCell>
                 <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
+              </TableCell>
+              <TableCell>
+                <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
               </TableCell>
               <TableCell>
                 <Link href={`/expense/${expense.id}`}>
@@ -96,15 +99,12 @@ export default async function Page() {
                   {formatPrice(expense.remaining ?? 0)}
                 </Link>
               </TableCell>
-              <TableCell>
-                <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>סה״כ הוצאות</TableCell>
+            <TableCell colSpan={1}>סה״כ הוצאות</TableCell>
             <TableCell className="text-red-500">{formatPrice(totalExpenses)}</TableCell>
           </TableRow>
         </TableFooter>
