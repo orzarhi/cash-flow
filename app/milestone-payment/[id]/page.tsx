@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from './form';
+import { UpsertMilestonePayment } from './upsert-milestone-payment';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { notFound } from 'next/navigation';
@@ -32,8 +32,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="min-h-screen space-y-4 mt-8">
       <h1 className='sm:text-2xl text-xl'>מפרעה חדשה ל{expense.supplierName} ({expense.profession})</h1>
-      <span></span>
-      <Form />
+      <UpsertMilestonePayment />
     </main>
   );
 }

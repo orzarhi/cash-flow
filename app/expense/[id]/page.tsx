@@ -53,7 +53,7 @@ export default async function Page({ params }: PageProps) {
         <DropdownOptions expenseId={expense.id} />
       </div>
 
-      <div className="border w-full rounded-lg p-4 dark:shadow-zinc-400/5 shadow-md space-y-4">
+      <div className="w-full rounded-lg p-4 dark:shadow-zinc-400/5 shadow-sm space-y-4">
         <div className="flex justify-between">
           <h2>שם הספק:</h2>
           <p>{expense.supplierName}</p>

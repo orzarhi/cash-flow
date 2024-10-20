@@ -24,7 +24,7 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon"  className="flex p-0">
+          <Button variant="ghost" size="icon" aria-label='ellipsis' className="flex p-0">
             {isPending ? (
               <Loader2 className="size-5 animate-spin shrink-0" />
             ) : (

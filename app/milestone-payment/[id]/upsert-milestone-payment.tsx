@@ -26,7 +26,7 @@ const LABEL_MAP: Record<PAYMENT, string> = {
   OTHER: 'אחר',
 };
 
-export const Form = () => {
+export const UpsertMilestonePayment = () => {
   const [paymentType, setPaymentType] = useState<PAYMENT | undefined>(undefined);
 
   const {

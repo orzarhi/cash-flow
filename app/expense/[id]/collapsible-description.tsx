@@ -19,7 +19,7 @@ export const CollapsibleDescription = ({ description }: CollapsibleDescriptionPr
     );
   }
 
-  if (description.length <= 10) {
+  if (description.length < 25) {
     return (
       <div className="flex justify-between">
         <h2>הערות:</h2>

@@ -82,7 +82,7 @@ export default async function Page() {
             <TableHead className="text-right">שם</TableHead>
             <TableHead className="text-right">סכום כולל</TableHead>
             <TableHead className="text-right">מקדמה</TableHead>
-            <TableHead className="text-right">מפרעות</TableHead>
+            <TableHead className="text-right">מפרעה</TableHead>
             <TableHead className="text-right">יתרה</TableHead>
           </TableRow>
         </TableHeader>
