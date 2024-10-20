@@ -43,7 +43,7 @@ export const deleteExpenseAction = async (expenseId: string) => {
   }
 };
 
-export const addMilestonePayment = async (expenseId: string) => {
+export const createMilestonePayment = async (expenseId: string) => {
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();

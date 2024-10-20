@@ -13,8 +13,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { CreateMilestone, createMilestonePaymentSchema } from '@/lib/validation';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { PAYMENT } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
+import { useForm } from 'react-hook-form';
 
 const LABEL_MAP: Record<PAYMENT, string> = {
   CASH: 'מזומן',
@@ -30,13 +33,32 @@ interface MilestonePaymentProps {
 }
 
 export const MilestonePayment = ({ openModal, setOpenModal }: MilestonePaymentProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateMilestone>({
+    resolver: zodResolver(createMilestonePaymentSchema),
+    defaultValues: {
+      title: '',
+      amount: '',
+      paymentType: PAYMENT.CASH,
+      date: new Date(),
+      description: '',
+    },
+  });
+
+  const onSubmit = (data: CreateMilestone) => {
+    console.log(data);
+  };
+
   return (
     <ResponsiveDialog
       isOpen={openModal}
       setIsOpen={setOpenModal}
       title="הוספת מפרעה חדשה"
     >
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-1.5">
           <Label htmlFor="title" className="font-semibold">
             שם
@@ -45,7 +67,9 @@ export const MilestonePayment = ({ openModal, setOpenModal }: MilestonePaymentPr
             type="text"
             id="title"
             placeholder="מלא את שם המפרעה (לדוגמה: מפרעה ראשונה)"
+            {...register('title')}
           />
+          {errors.title && <span className="error-message">{errors.title.message}</span>}
         </div>
 
         <div className="space-y-1.5">
@@ -57,14 +81,18 @@ export const MilestonePayment = ({ openModal, setOpenModal }: MilestonePaymentPr
             id="amount"
             inputMode="numeric"
             placeholder="מלא את סכום המפרעה (בשקלים)"
+            {...register('amount')}
           />
+          {errors.amount && (
+            <span className="error-message">{errors.amount.message}</span>
+          )}
         </div>
 
         <div className="space-y-1.5">
           <Label htmlFor="paymentType" className="font-semibold">
             אופן תשלום
           </Label>
-          <Select dir='rtl'>
+          <Select dir="rtl">
             <SelectTrigger className="w-full">
               <SelectValue placeholder="בחר אופן תשלום" />
             </SelectTrigger>
@@ -92,14 +120,14 @@ export const MilestonePayment = ({ openModal, setOpenModal }: MilestonePaymentPr
           <Textarea
             id="note"
             placeholder="מלא את הערה (אופציונלי)"
+            {...register('description')}
           />
+          {errors.description && (
+            <span className="error-message">{errors.description.message}</span>
+          )}
         </div>
 
-        <div className="flex justify-start">
-          <Button type="submit">
-            הוסף מפרעה
-          </Button>
-        </div>
+        <Button type="submit">הוסף מפרעה</Button>
       </form>
     </ResponsiveDialog>
   );

@@ -37,7 +37,7 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
         toast.error(error);
         return;
       }
-      toast.success('הוצאה נמחקה בהצלחה.');
+      toast.success('ההוצאה נמחקה בהצלחה.');
       router.push('/dashboard');
     },
   });
