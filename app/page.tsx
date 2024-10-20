@@ -71,7 +71,7 @@ export default async function Home() {
       <section className="flex flex-col items-center gap-5">
         <h2 className="text-4xl font-extrabold">צעד ראשון לניהול תקציבכם!</h2>
         <p className="text-muted-foreground text-center mt-2 text-base md:text-lg">
-          הצטרפו אלינו עכשיו, פתחו חשבון חינם ותתחילו לשלוט בהוצאות שלכם בקלות וביעילות.
+          הצטרפו אלינו עכשיו, צרו חשבון בחינם ותתחילו לשלוט בהוצאות שלכם בקלות וביעילות.
         </p>
 
         {!user?.id ? (
