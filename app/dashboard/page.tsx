@@ -52,7 +52,7 @@ export default async function Page() {
     );
   }
 
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 
   return (
     <main className="min-h-screen space-y-8 mt-8">
