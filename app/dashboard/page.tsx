@@ -13,10 +13,15 @@ import { formatPrice } from '@/lib/utils';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { CirclePlus, Ghost } from 'lucide-react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export default async function Page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
+  if (!user) {
+    return notFound();
+  }
 
   const expenses = await db.expense.findMany({
     where: {
