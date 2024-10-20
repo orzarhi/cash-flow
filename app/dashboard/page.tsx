@@ -82,6 +82,7 @@ export default async function Page() {
             <TableHead className="text-right">שם</TableHead>
             <TableHead className="text-right">סכום כולל</TableHead>
             <TableHead className="text-right">מקדמה</TableHead>
+            <TableHead className="text-right">מפרעות</TableHead>
             <TableHead className="text-right">יתרה</TableHead>
           </TableRow>
         </TableHeader>
@@ -98,6 +99,9 @@ export default async function Page() {
                 <Link href={`/expense/${expense.id}`}>
                   {formatPrice(expense.deposit ?? 0)}
                 </Link>
+              </TableCell>
+              <TableCell>
+                0
               </TableCell>
               <TableCell className="text-right">
                 <Link href={`/expense/${expense.id}`}>

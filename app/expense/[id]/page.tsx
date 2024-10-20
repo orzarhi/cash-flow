@@ -47,7 +47,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <main className="min-h-screen space-y-14 sm:p-8">
+    <main className="min-h-screen space-y-10 sm:p-8">
       <div className="flex justify-between p-4 mt-2 sm:p-0 sm:mt-0 mb-4">
         <h1 className="text-2xl font-semibold text-center ">פרטי ההוצאה</h1>
         <DropdownOptions expenseId={expense.id} />
@@ -55,44 +55,44 @@ export default async function Page({ params }: PageProps) {
 
       <div className="border w-full rounded-lg p-4 dark:shadow-zinc-400/5 shadow-md space-y-4">
         <div className="flex justify-between">
-          <h2 className="font-medium">שם הספק:</h2>
+          <h2>שם הספק:</h2>
           <p>{expense.supplierName}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">מספר טלפון:</h2>
+          <h2>מספר טלפון:</h2>
           <p>{expense.phoneNumber ?? 'לא קיים מספר טלפון'}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">מקצוע:</h2>
+          <h2>מקצוע:</h2>
           <p>{expense.profession}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">סכום כולל:</h2>
+          <h2>סכום כולל:</h2>
           <p>{formatPrice(expense.amount)}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">מקדמה:</h2>
+          <h2>מקדמה:</h2>
           <p>{formatPrice(expense.deposit ?? 0)}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">יתרה לתשלום:</h2>
+          <h2>יתרה לתשלום:</h2>
           <p>{formatPrice(expense.remaining)}</p>
         </div>
 
         <div className="flex justify-between">
-          <h2 className="font-medium">תהליך התקדמות:</h2>
+          <h2>תהליך התקדמות:</h2>
           <p>{expense.workProgress ?? '0%'}</p>
         </div>
 
         <CollapsibleDescription description={expense.description} />
 
         <div className="flex justify-between">
-          <h2 className="font-medium">תאריך יצירה:</h2>
+          <h2>תאריך יצירה:</h2>
           <p>{format(new Date(expense.createdAt), 'HH:mm dd/MM/yy')}</p>
         </div>
       </div>

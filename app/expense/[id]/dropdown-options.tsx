@@ -44,7 +44,7 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="flex size-8 p-0 data-[state=open]:bg-muted"
+            className="flex p-0"
           >
             {isPending ? (
               <Loader2 className="size-5 animate-spin shrink-0" />

@@ -25,11 +25,7 @@ export default function RootLayout({
           <div className="flex-1 flex flex-col h-full">
             <Providers>
               <Toaster
-                position="bottom-right"
-                icons={{
-                  success: '🎉',
-                  error: '❌',
-                }}
+                position="top-center"
                 dir="rtl"
                 duration={5000}
               />
