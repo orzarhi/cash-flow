@@ -31,7 +31,7 @@ export const ResponsiveDialog = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
         className={cn(
-          'sm:max-w-[525px] w-11/12 mt-8 rounded-lg max-h-[80vh] overflow-y-auto',
+          'sm:max-w-[600px] w-[95%] p-1 mt-5 rounded-md max-h-[80vh] overflow-y-auto',
           {
             'text-center': textCenter,
           }

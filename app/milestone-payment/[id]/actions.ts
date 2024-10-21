@@ -54,9 +54,65 @@ export const createMilestonePaymentAction = async (
         totalMilestonePayment: {
           increment: parseFloat(milestonePayment.amount),
         },
-        remaining:{
+        remaining: {
           decrement: parseFloat(milestonePayment.amount),
-        }
+        },
+      },
+    });
+
+    revalidatePath('/dashboard');
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      success: false,
+      error: 'משהו השתבש, נסה שוב מאוחר יותר.',
+    };
+  }
+};
+
+export const deleteMilestonePaymentAction = async (milestonePaymentId: string) => {
+  try {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const milestonePayment = await db.milestonePayment.findFirst({
+      where: {
+        id: milestonePaymentId,
+        expense: {
+          userId: user.id,
+        },
+      },
+    });
+
+    if (!milestonePayment) {
+      throw new Error('Milestone payment not found');
+    }
+
+    await db.expense.update({
+      where: {
+        id: milestonePayment.expenseId as string,
+        userId: user.id,
+      },
+      data: {
+        totalMilestonePayment: {
+          decrement: milestonePayment.paidAmount,
+        },
+        remaining: {
+          increment: milestonePayment.paidAmount,
+        },
+      },
+    });
+
+    await db.milestonePayment.delete({
+      where: {
+        id: milestonePaymentId,
       },
     });
 

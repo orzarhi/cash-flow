@@ -6,8 +6,12 @@ import { Expense, PAYMENT } from '@prisma/client';
 import { useState } from 'react';
 import { LABEL_MAP } from './upsert-milestone-payment';
 import { format } from 'date-fns';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { deleteMilestonePaymentAction } from './actions';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 type ExpenseWithout = Omit<Expense, 'userId' | 'updatedAt'>;
 
@@ -30,6 +34,32 @@ export const MilestonePaymentMoreDetails = ({
   milestonePaymentLength,
 }: MoreDetailsProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [milestonePaymentId, setMilestonePaymentId] = useState<string | null>(null);
+
+  const router = useRouter();
+
+  const { mutate: deleteMilestonePayment, isPending } = useMutation({
+    mutationKey: ['create-milestone-payment'],
+    mutationFn: deleteMilestonePaymentAction,
+    onError: (error) => {
+      console.error(error);
+      toast.error('אירעה שגיאה במחיקת מפרעה זה, אנא נסה שוב מאוחר יותר.');
+    },
+    onSuccess: ({ success, error }) => {
+      if (!success) {
+        toast.error(error);
+        return;
+      }
+      toast.success('מפרעה נמחקה בהצלחה.');
+      router.push('/dashboard');
+    },
+    onSettled: () => {
+      setMilestonePaymentId(null);
+    },
+    onMutate: (milestonePaymentId: string) => {
+      setMilestonePaymentId(milestonePaymentId);
+    },
+  });
 
   return (
     <>
@@ -54,7 +84,7 @@ export const MilestonePaymentMoreDetails = ({
           </h1>
           <div className="space-y-4">
             {expense.milestonePayment.map((milestone, index) => (
-              <div key={milestone.id} className="border-b p-4 rounded-lg shadow-sm">
+              <div key={milestone.id} className="border-b last:border-0 p-4 rounded-lg shadow-sm">
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-lg font-medium">
                     {index + 1}. {milestone.title}
@@ -76,12 +106,20 @@ export const MilestonePaymentMoreDetails = ({
                   <p className="text-sm text-right w-2/3 text-muted-foreground mt-2">
                     {milestone.description}
                   </p>
-                  <div className="flex gap-2">
+                  <div className="flex gap-0.5">
                     <Button size="icon" variant="ghost">
                       <Pencil />
                     </Button>
-                    <Button size="icon" variant="ghost">
-                      <Trash2 className="text-red-500" />
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => deleteMilestonePayment(milestone.id)}
+                    >
+                      {isPending && milestonePaymentId === milestone.id ? (
+                        <Loader2 className="text-red-500 animate-spin" />
+                      ) : (
+                        <Trash2 className="text-red-500" />
+                      )}
                     </Button>
                   </div>
                 </div>
