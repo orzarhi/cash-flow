@@ -14,7 +14,7 @@ export default async function Home() {
           <Image
             src="/logo.webp"
             className="inline-block"
-            alt="ToolCash Logo"
+            alt="Cash Flow Logo"
             width={50}
             height={50}
           />
@@ -27,17 +27,18 @@ export default async function Home() {
       </section>
 
       <section className="w-full max-w-7xl px-4">
-        <h2 className="absolute mx-auto left-0 right-0 text-3xl font-bold">
-          תכונות עיקריות
-        </h2>
-        <Image
-          src="/line.png"
-          alt="line"
-          className="relative mx-auto bottom-4"
-          width={300}
-          height={10}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 -mt-8">
+        <div className="absolute mx-auto left-0 right-0 -mt-5">
+          <h2 className="text-3xl font-bold">תכונות עיקריות</h2>
+          <Image
+            src="/line.png"
+            alt="line"
+            className="relative mx-auto bottom-12"
+            width={300}
+            height={10}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
           <div className="text-center border rounded-lg shadow-sm p-6">
             <h3 className="text-xl md:text-2xl font-semibold">
               <span className="inline-block sm:block">🔍</span> ניתוח הוצאות

@@ -40,7 +40,6 @@ export default async function Page() {
     },
   });
 
-  console.log("🚀 ~ Page ~ expenses:", expenses)
   if (!expenses.length) {
     return (
       <main className="min-h-screen space-y-12 mt-8">

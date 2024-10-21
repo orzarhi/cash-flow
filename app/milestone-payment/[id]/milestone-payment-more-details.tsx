@@ -38,7 +38,7 @@ export const MilestonePaymentMoreDetails = ({
             className="text-muted-foreground text-sm cursor-pointer"
             onClick={() => setModalOpen(true)}
           >
-            הצג פרטים נוספים ({milestonePaymentLength})
+            הצגת פרטים נוספים ({milestonePaymentLength})
           </a>
         </div>
         <p>{formatPrice(expense.totalMilestonePayment)}</p>
@@ -52,7 +52,7 @@ export const MilestonePaymentMoreDetails = ({
             {expense.milestonePayment.map((milestone, index) => (
               <div
                 key={milestone.id}
-                className="border border-muted-foreground p-4 rounded-lg shadow-sm"
+                className="border-b p-4 rounded-lg shadow-sm"
               >
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-lg font-medium">

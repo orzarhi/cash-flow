@@ -10,12 +10,12 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { FieldError, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { CreateMilestone } from '@/lib/validation';
+import { CreateMilestonePayment } from '@/lib/validation';
 
 interface DatePickerProps {
   className?: string;
-  setValue: UseFormSetValue<CreateMilestone>;     
-  watch: UseFormWatch<CreateMilestone>;
+  setValue: UseFormSetValue<CreateMilestonePayment>;     
+  watch: UseFormWatch<CreateMilestonePayment>;
   errors: { [x: string]: FieldError | any };
 }
 

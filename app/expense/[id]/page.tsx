@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DropdownOptions } from './dropdown-options';
 import { CollapsibleDescription } from './collapsible-description';
-import { MilestonePaymentMoreDetails } from '@/app/milestone-payment';
+import { MilestonePaymentMoreDetails } from '@/app/milestone-payment/[id]/milestone-payment-more-details';
 interface PageProps {
   params: {
     id: string;
@@ -97,7 +97,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <CollapsibleDescription description={expense.description} />
-        
+
         <div className="flex justify-between">
           <h2>תאריך יצירה:</h2>
           <p>{format(new Date(expense.createdAt), 'HH:mm dd/MM/yy')}</p>
