@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DropdownOptions } from './dropdown-options';
 import { CollapsibleDescription } from './collapsible-description';
+import { MilestonePaymentMoreDetails } from '@/app/milestone-payment';
 interface PageProps {
   params: {
     id: string;
@@ -35,6 +36,7 @@ export default async function Page({ params }: PageProps) {
       deposit: true,
       remaining: true,
       milestonePayment: true,
+      totalMilestonePayment: true,
       amount: true,
       workProgress: true,
       description: true,
@@ -79,6 +81,11 @@ export default async function Page({ params }: PageProps) {
           <p>{formatPrice(expense.deposit ?? 0)}</p>
         </div>
 
+        <MilestonePaymentMoreDetails
+          expense={expense}
+          milestonePaymentLength={expense.milestonePayment.length}
+        />
+
         <div className="flex justify-between">
           <h2>יתרה לתשלום:</h2>
           <p>{formatPrice(expense.remaining)}</p>
@@ -90,7 +97,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <CollapsibleDescription description={expense.description} />
-
+        
         <div className="flex justify-between">
           <h2>תאריך יצירה:</h2>
           <p>{format(new Date(expense.createdAt), 'HH:mm dd/MM/yy')}</p>

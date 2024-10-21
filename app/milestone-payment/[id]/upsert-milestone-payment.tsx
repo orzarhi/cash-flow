@@ -22,7 +22,7 @@ import { createMilestonePaymentAction } from './actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
-const LABEL_MAP: Record<PAYMENT, string> = {
+export const LABEL_MAP: Record<PAYMENT, string> = {
   CASH: 'מזומן',
   CARD: 'כרטיס אשראי',
   CHECK: "צ'ק",

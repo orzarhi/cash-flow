@@ -62,7 +62,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading && loadingText ? loadingText : children}
-        {isLoading && loadingText && <Loader2 className="size-4 animate-spin mr-2" />}
+        {isLoading && loadingText && <Loader2 className="size-4 animate-spin" />}
       </Comp>
     );
   }

@@ -29,7 +29,7 @@ export const ModeToggle = () => {
           onClick={() => setTheme(optionTheme)}
           className={cn('p-2 rounded-full transition-colors', {
             'bg-zinc-200 text-zinc-700': theme === optionTheme && optionTheme === 'light',
-            'bg-zinc-700 text-primary-foreground':
+            'bg-zinc-700 text-muted-foreground':
               theme === optionTheme && optionTheme === 'dark',
             'text-muted-foreground hover:text-foreground': theme !== optionTheme,
           })}
