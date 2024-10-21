@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { db } from '@/db';
-import { formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { CirclePlus, Ghost } from 'lucide-react';
 import Link from 'next/link';
@@ -68,7 +68,6 @@ export default async function Page() {
 
   const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
 
-
   return (
     <main className="min-h-screen space-y-8 mt-8">
       <div className="flex justify-between">
@@ -102,7 +101,9 @@ export default async function Page() {
               <TableCell>
                 <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
               </TableCell>
-              <TableCell>
+              <TableCell className={cn('',{
+                'text-green-500': expense.remaining === 0,
+              })}>
                 <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
               </TableCell>
               <TableCell>

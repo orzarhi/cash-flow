@@ -1,6 +1,6 @@
 import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/db';
-import { formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { format } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
@@ -73,7 +73,9 @@ export default async function Page({ params }: PageProps) {
 
         <div className="flex justify-between">
           <h2>סכום כולל:</h2>
-          <p>{formatPrice(expense.amount)}</p>
+          <p className={cn('',{
+            'text-green-500': expense.remaining === 0,
+          })}>{formatPrice(expense.amount)}</p>
         </div>
 
         <div className="flex justify-between">
