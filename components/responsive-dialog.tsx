@@ -7,14 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer';
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
@@ -35,56 +27,30 @@ export const ResponsiveDialog = ({
   description,
   textCenter,
 }: ResponsiveDialogProps) => {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-
-  if (isDesktop) {
-    return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent
-          className={cn('sm:max-w-[525px]', {
-            'text-center': textCenter,
-          })}
-        >
-          <DialogHeader>
-            <DialogTitle className="text-center">{title}</DialogTitle>
-            {description && (
-              <DialogDescription
-                className={cn('!text-muted-foreground', {
-                  'text-center': textCenter,
-                })}
-              >
-                {description}
-              </DialogDescription>
-            )}
-          </DialogHeader>
-          {children}
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerContent className='z-[10000]'>
-        <DrawerHeader
-          className={cn('text-left', {
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent
+        className={cn(
+          'sm:max-w-[525px] w-11/12 mt-8 rounded-lg max-h-[80vh] overflow-y-auto',
+          {
             'text-center': textCenter,
-          })}
-        >
-          <DrawerTitle className='text-center'>{title}</DrawerTitle>
+          }
+        )}
+      >
+        <DialogHeader>
+          <DialogTitle className="text-center">{title}</DialogTitle>
           {description && (
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription
+              className={cn('!text-muted-foreground', {
+                'text-center': textCenter,
+              })}
+            >
               {description}
             </DialogDescription>
           )}
-        </DrawerHeader>
-        <div className="p-2">{children}</div>
-        <DrawerFooter className="pt-2">
-          {/* <DrawerClose asChild>
-            <Button variant="ghost">Cancel</Button>
-          </DrawerClose> */}
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+        </DialogHeader>
+        {children}
+      </DialogContent>
+    </Dialog>
   );
 };
