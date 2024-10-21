@@ -35,7 +35,7 @@ export const useDeleteMilestonePayment = (
   const router = useRouter();
 
   return useMutation({
-    mutationKey: ['create-milestone-payment'],
+    mutationKey: ['delete-milestone-payment'],
     mutationFn: deleteMilestonePaymentAction,
     onError: (error) => {
       console.error(error);

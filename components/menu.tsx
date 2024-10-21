@@ -5,13 +5,11 @@ import {
   LayoutDashboard,
   LogOut,
   Menu as MenuIcon,
-  Sofa,
   SquarePen,
-  User,
-  X,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface MenuProps {
   userId?: string;
@@ -54,7 +52,7 @@ export const Menu = ({ userId }: MenuProps) => {
         {userId ? (
           <>
             <Link
-              href="/expense/create"
+              href="/expense/upsert"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
               <SquarePen className="size-4 my-auto text-black/80 dark:text-white/80" />
@@ -67,7 +65,7 @@ export const Menu = ({ userId }: MenuProps) => {
               <LayoutDashboard className="size-4 my-auto text-black/80 dark:text-white/80" />
               מרכז ניהול
             </Link>
-            <Link
+            {/* <Link
               href="/profile"
               className="flex gap-1.5 px-4 py-2 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "
             >
@@ -81,7 +79,7 @@ export const Menu = ({ userId }: MenuProps) => {
             >
               <Sofa className="size-4 my-auto text-black/80 dark:text-white/80" />
               אודות
-            </Link>
+            </Link> */}
             <a
               href="/api/auth/logout"
               className="flex gap-1.5 px-4 py-2 border-b border-zinc-200 dark:border-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 hover:text-zinc-900 "

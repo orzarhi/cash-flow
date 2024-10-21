@@ -42,7 +42,7 @@ export const Navbar = async () => {
                 >
                   מרכז ניהול ✨
                 </Link>
-                <Link
+                {/* <Link
                   href="/profile"
                   className={buttonVariants({
                     size: 'sm',
@@ -59,7 +59,7 @@ export const Navbar = async () => {
                   })}
                 >
                   אודות
-                </Link>
+                </Link> */}
                 <a
                   href="/api/auth/logout"
                   className={buttonVariants({
@@ -98,7 +98,7 @@ export const Navbar = async () => {
               <>
                 <div className="h-8 w-px bg-muted-foreground hidden sm:block" />
                 <Link
-                  href="/expense/create"
+                  href="/expense/upsert"
                   prefetch
                   className={buttonVariants({
                     size: 'sm',
