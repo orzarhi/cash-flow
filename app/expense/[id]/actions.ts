@@ -3,6 +3,7 @@
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { revalidatePath } from 'next/cache';
+import { expenseIdValidation } from '@/lib/validation';
 
 export const deleteExpenseAction = async (expenseId: string) => {
   try {
@@ -12,6 +13,8 @@ export const deleteExpenseAction = async (expenseId: string) => {
     if (!user) {
       throw new Error('User not found');
     }
+
+    expenseIdValidation.parse(expenseId);
 
     const expense = await db.expense.findFirst({
       where: {

@@ -1,7 +1,12 @@
 'use server';
 
 import { db } from '@/db';
-import { CreateMilestonePayment } from '@/lib/validation';
+import {
+  CreateMilestonePayment,
+  createMilestonePaymentSchema,
+  expenseIdValidation,
+  milestonePaymentIdValidation,
+} from '@/lib/validation';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { PAYMENT } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -16,6 +21,9 @@ export const createMilestonePaymentAction = async (
     if (!user) {
       throw new Error('User not found');
     }
+
+    const { amount, title, date, description } =
+      createMilestonePaymentSchema.parse(milestonePayment);
 
     const { expenseId, paymentType } = milestonePayment;
 
@@ -37,11 +45,11 @@ export const createMilestonePaymentAction = async (
     await db.milestonePayment.create({
       data: {
         expenseId: expense.id,
-        title: milestonePayment.title,
-        paidAmount: parseFloat(milestonePayment.amount),
+        title,
+        paidAmount: parseFloat(amount),
         paymentType,
-        date: milestonePayment.date,
-        description: milestonePayment.description || null,
+        date,
+        description: description || null,
       },
     });
 
@@ -52,17 +60,17 @@ export const createMilestonePaymentAction = async (
       },
       data: {
         totalMilestonePayment: {
-          increment: parseFloat(milestonePayment.amount),
+          increment: parseFloat(amount),
         },
         remaining: {
-          decrement: parseFloat(milestonePayment.amount),
+          decrement: parseFloat(amount),
         },
       },
     });
 
-    revalidatePath('/dashboard');
+    revalidatePath(`/expense/${expenseId}`);
 
-    return { success: true };
+    return { success: true, expenseId };
   } catch (error) {
     console.log(error);
 
@@ -81,6 +89,8 @@ export const deleteMilestonePaymentAction = async (milestonePaymentId: string) =
     if (!user) {
       throw new Error('User not found');
     }
+
+    milestonePaymentIdValidation.parse(milestonePaymentId);
 
     const milestonePayment = await db.milestonePayment.findFirst({
       where: {
@@ -116,9 +126,9 @@ export const deleteMilestonePaymentAction = async (milestonePaymentId: string) =
       },
     });
 
-    revalidatePath('/dashboard');
+    revalidatePath(`/expense/${milestonePayment.expenseId}`);
 
-    return { success: true };
+    return { success: true, expenseId: milestonePayment.expenseId };
   } catch (error) {
     console.log(error);
 
@@ -144,7 +154,13 @@ export const updateMilestonePaymentAction = async (
       throw new Error('User not found');
     }
 
+    const { amount, title, date, description } =
+      createMilestonePaymentSchema.parse(milestonePayment);
+
     const { expenseId, paymentType, milestonePaymentId } = milestonePayment;
+
+    milestonePaymentIdValidation.parse(milestonePaymentId);
+    expenseIdValidation.parse(expenseId);
 
     if (!expenseId) {
       throw new Error('Expense ID not found');
@@ -194,11 +210,11 @@ export const updateMilestonePaymentAction = async (
         id: milestonePaymentId,
       },
       data: {
-        title: milestonePayment.title,
-        paidAmount: parseFloat(milestonePayment.amount),
+        title,
+        paidAmount: parseFloat(amount),
         paymentType,
-        date: milestonePayment.date,
-        description: milestonePayment.description || null,
+        date,
+        description: description || null,
       },
     });
 
@@ -209,17 +225,17 @@ export const updateMilestonePaymentAction = async (
       },
       data: {
         totalMilestonePayment: {
-          increment: parseFloat(milestonePayment.amount),
+          increment: parseFloat(amount),
         },
         remaining: {
-          decrement: parseFloat(milestonePayment.amount),
+          decrement: parseFloat(amount),
         },
       },
     });
 
-    revalidatePath('/dashboard');
+    revalidatePath(`/expense/${expenseId}`);
 
-    return { success: true };
+    return { success: true, expenseId };
   } catch (error) {
     console.log(error);
 

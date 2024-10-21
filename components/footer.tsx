@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer className="ltr flex flex-col gap-3 md:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
       <p className="text-xs text-muted-foreground">
-        &copy; {new Date().getFullYear()} ToolCash All rights reserved.
+        &copy; {new Date().getFullYear()} CashFlow All rights reserved.
       </p>
       <nav className="mx-auto flex gap-4 sm:gap-6">
         <Link

@@ -14,7 +14,6 @@ interface PageProps {
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
-  console.log('🚀 ~ Page ~ searchParams:', searchParams);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

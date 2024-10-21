@@ -45,7 +45,7 @@ export default async function Page() {
       <main className="min-h-screen space-y-12 mt-8">
         <div className="flex justify-end">
           <Link
-            href="/expense/create"
+            href="/expense/upsert"
             className={buttonVariants({
               className: 'inline-flex gap-2',
               variant: 'ghost',
@@ -75,7 +75,7 @@ export default async function Page() {
           ההוצאות שלי ({expenses.length})
         </h1>
         <Link
-          href="/expense/create"
+          href="/expense/upsert"
           className={buttonVariants({
             className: 'inline-flex gap-2',
             variant: 'ghost',

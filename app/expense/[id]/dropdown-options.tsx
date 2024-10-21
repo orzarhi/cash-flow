@@ -24,9 +24,9 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label='ellipsis' className="flex p-0">
+          <Button variant="ghost" size="icon" aria-label="ellipsis" className="flex p-0">
             {isPending ? (
-              <Loader2 className="size-5 text-red-500  animate-spin shrink-0" />
+              <Loader2 className="size-5 text-red-500 animate-spin shrink-0" />
             ) : (
               <Ellipsis className="size-5 shrink-0" />
             )}
@@ -42,7 +42,10 @@ export const DropdownOptions = ({ expenseId }: DropdownOptionsProps) => {
             <span className="mx-2 ml-auto">מפרעה</span>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="flex p-2.5">
+          <DropdownMenuItem
+            className="flex p-2.5"
+            onClick={() => router.push(`/expense/upsert?expenseId=${expenseId}`)}
+          >
             <Pencil className="size-5" />
             <span className="mx-2 ml-auto">עריכה</span>
           </DropdownMenuItem>

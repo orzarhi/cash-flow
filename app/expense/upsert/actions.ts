@@ -14,10 +14,10 @@ export const createExpenseAction = async (expense: CreateExpense) => {
       throw new Error('User not found');
     }
 
-    const { supplierName, phoneNumber, profession, amount, advance, description } =
+    const { supplierName, phoneNumber, profession, amount, deposit, description } =
       createExpenseSchema.parse(expense);
 
-    if (advance && parseFloat(amount) < parseFloat(advance)) {
+    if (deposit && parseFloat(amount) < parseFloat(deposit)) {
       return {
         success: false,
         error: 'המקדמה לא יכולה להיות גבוהה מהמחיר.',
@@ -30,10 +30,10 @@ export const createExpenseAction = async (expense: CreateExpense) => {
         phoneNumber: phoneNumber || null,
         profession,
         amount: parseFloat(amount),
-        deposit: advance ? parseFloat(advance) : 0,
+        deposit: deposit ? parseFloat(deposit) : 0,
         description: description || null,
 
-        remaining: parseFloat(amount) - (advance ? parseFloat(advance) : 0),
+        remaining: parseFloat(amount) - (deposit ? parseFloat(deposit) : 0),
         userId: user.id,
       },
     });

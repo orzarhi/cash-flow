@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const milestonePaymentIdValidation = z.string().cuid();
+
 export const createMilestonePaymentSchema = z.object({
   title: z
     .string()

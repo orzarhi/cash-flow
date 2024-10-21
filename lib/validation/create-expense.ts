@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const expenseIdValidation = z.string().cuid();
+
 export const createExpenseSchema = z.object({
   supplierName: z
     .string()
@@ -25,7 +27,7 @@ export const createExpenseSchema = z.object({
     .min(1, 'מחיר חייב להיות מספר חיובי.')
     .max(8, 'מחיר יכול להכיל עד 8 ספרות.'),
 
-  advance: z
+  deposit: z
     .string()
     .max(8, 'המקדמה יכולה להכיל עד 8 ספרות.')
     .optional()

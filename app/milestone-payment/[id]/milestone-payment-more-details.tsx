@@ -1,18 +1,15 @@
 'use client';
 
 import { ResponsiveDialog } from '@/components/responsive-dialog';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { useDeleteMilestonePayment } from '@/hooks/use-milestone-payment';
 import { formatPrice } from '@/lib/utils';
 import { Expense, PAYMENT } from '@prisma/client';
-import { useState } from 'react';
-import { LABEL_MAP } from './upsert-milestone-payment';
 import { format } from 'date-fns';
 import { Loader2, Pencil, Trash2 } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { useMutation } from '@tanstack/react-query';
-import { deleteMilestonePaymentAction } from './actions';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useState } from 'react';
+import { LABEL_MAP } from './upsert-milestone-payment';
 
 type ExpenseWithout = Omit<Expense, 'userId' | 'updatedAt'>;
 
@@ -37,30 +34,8 @@ export const MilestonePaymentMoreDetails = ({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [milestonePaymentId, setMilestonePaymentId] = useState<string | null>(null);
 
-  const router = useRouter();
 
-  const { mutate: deleteMilestonePayment, isPending } = useMutation({
-    mutationKey: ['create-milestone-payment'],
-    mutationFn: deleteMilestonePaymentAction,
-    onError: (error) => {
-      console.error(error);
-      toast.error('אירעה שגיאה במחיקת מפרעה זה, אנא נסה שוב מאוחר יותר.');
-    },
-    onSuccess: ({ success, error }) => {
-      if (!success) {
-        toast.error(error);
-        return;
-      }
-      toast.success('מפרעה נמחקה בהצלחה.');
-      router.push('/dashboard');
-    },
-    onSettled: () => {
-      setMilestonePaymentId(null);
-    },
-    onMutate: (milestonePaymentId: string) => {
-      setMilestonePaymentId(milestonePaymentId);
-    },
-  });
+  const { mutate: deleteMilestonePayment, isPending } = useDeleteMilestonePayment(setMilestonePaymentId);
 
   return (
     <>
