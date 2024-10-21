@@ -18,7 +18,7 @@ export default async function Home() {
             width={50}
             height={50}
           />
-          <h1 className="text-4xl md:text-6xl font-bold">ToolCash</h1>
+          <h1 className="text-4xl md:text-6xl font-bold">Cash-Flow</h1>
         </div>
         <p className="text-lg md:text-xl mt-4">
           נהל את הוצאות בניית הבית שלך בצורה פשוטה ויעילה. דע לאן כל שקל נעלם ותקבל תמונה

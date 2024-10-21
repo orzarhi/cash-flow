@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/sonner';
 const inter = Recursive({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ToolCash',
+  title: 'Cash Flow',
   description: 'נהל את הוצאות בניית הבית שלך בצורה פשוטה ויעילה. דע לאן כל שקל נעלם ותקבל תמונה ברורה על התקציב שלך.',
 };
 
