@@ -19,11 +19,11 @@ export default async function Page({ params }: PageProps) {
   }
 
   const expense = await db.expense.findFirst({
-    where: { 
+    where: {
       userId: user.id,
       id: params.id,
-     },
-  });  
+    },
+  });
 
   if (!expense) {
     return notFound();
@@ -31,8 +31,10 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="min-h-screen space-y-4 mt-8">
-      <h1 className='sm:text-2xl text-xl'>מפרעה חדשה ל{expense.supplierName} ({expense.profession})</h1>
-      <UpsertMilestonePayment />
+      <h1 className="sm:text-2xl text-xl">
+        מפרעה חדשה ל{expense.supplierName} ({expense.profession})
+      </h1>
+      <UpsertMilestonePayment expenseId={expense.id} />
     </main>
   );
 }

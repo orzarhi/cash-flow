@@ -1,24 +1,17 @@
-import { PAYMENT } from '@prisma/client';
 import { z } from 'zod';
 
 export const createMilestonePaymentSchema = z.object({
   title: z
     .string()
     .min(1, 'שם המפרעה הוא שדה חובה.')
+    .max(25, 'שם המפרעה יכול להכיל עד 25 תווים.')
     .regex(/^[א-תa-zA-Z\s]+$/, 'שם המפרעה יכול להכיל רק אותיות בעברית ואנגלית.'),
 
   amount: z
     .string()
     .min(1, 'סכום חייב להיות מספר חיובי.')
+    .max(8, 'סכום יכול להכיל עד 8 ספרות.')
     .regex(/^\d+$/, 'סכום חייב להיות מספר חיובי.'),
-
-  paymentType: z.enum([
-    PAYMENT.CARD,
-    PAYMENT.CASH,
-    PAYMENT.CHECK,
-    PAYMENT.TRANSFER,
-    PAYMENT.OTHER,
-  ]),
 
   date: z.date(),
 
@@ -32,4 +25,4 @@ export const createMilestonePaymentSchema = z.object({
     ),
 });
 
-export type CreateMilestone = z.infer<typeof createMilestonePaymentSchema>;
+export type CreateMilestonePayment = z.infer<typeof createMilestonePaymentSchema>;

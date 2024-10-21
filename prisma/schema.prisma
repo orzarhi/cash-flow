@@ -37,7 +37,8 @@ model Expense {
   workProgress Float?
   remaining    Float
 
-  milestonePayment MilestonePayment[]
+  milestonePayment      MilestonePayment[]
+  totalMilestonePayment Float              @default(0)
 
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String?

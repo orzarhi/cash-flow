@@ -1,2 +1,2 @@
 export { type CreateExpense, createExpenseSchema } from './create-expense';
-export { type CreateMilestone, createMilestonePaymentSchema } from './create-milestone-payment';
+export { type CreateMilestonePayment, createMilestonePaymentSchema } from './create-milestone-payment';

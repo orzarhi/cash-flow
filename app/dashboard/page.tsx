@@ -27,11 +27,20 @@ export default async function Page() {
     where: {
       userId: user.id,
     },
+    select: {
+      id: true,
+      supplierName: true,
+      amount: true,
+      deposit: true,
+      remaining: true,
+      totalMilestonePayment: true,
+    },
     orderBy: {
       createdAt: 'desc',
     },
   });
 
+  console.log("🚀 ~ Page ~ expenses:", expenses)
   if (!expenses.length) {
     return (
       <main className="min-h-screen space-y-12 mt-8">
@@ -57,7 +66,9 @@ export default async function Page() {
     );
   }
 
-  const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0);
+
+  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+
 
   return (
     <main className="min-h-screen space-y-8 mt-8">
@@ -82,7 +93,7 @@ export default async function Page() {
             <TableHead className="text-right">שם</TableHead>
             <TableHead className="text-right">סכום כולל</TableHead>
             <TableHead className="text-right">מקדמה</TableHead>
-            <TableHead className="text-right">מפרעה</TableHead>
+            <TableHead className="text-right">מפרעות</TableHead>
             <TableHead className="text-right">יתרה</TableHead>
           </TableRow>
         </TableHeader>
@@ -101,7 +112,9 @@ export default async function Page() {
                 </Link>
               </TableCell>
               <TableCell>
-                0
+                <Link href={`/expense/${expense.id}`}>
+                  {formatPrice(expense.totalMilestonePayment ?? 0)}
+                </Link>
               </TableCell>
               <TableCell className="text-right">
                 <Link href={`/expense/${expense.id}`}>

@@ -77,7 +77,7 @@ export const UpsertExpense = () => {
           type="number"
           id="phoneNumber"
           inputMode="numeric"
-          placeholder="מלא את מספר הטלפון. ללא מקף או רווחים (אופצונלי)"
+          placeholder="מלא את מספר הטלפון (אופצונלי)"
           {...register('phoneNumber')}
         />
         {errors.phoneNumber && (

@@ -12,11 +12,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { CreateMilestone, createMilestonePaymentSchema } from '@/lib/validation';
+import { CreateMilestonePayment, createMilestonePaymentSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PAYMENT } from '@prisma/client';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { createMilestonePaymentAction } from './actions';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const LABEL_MAP: Record<PAYMENT, string> = {
   CASH: 'מזומן',
@@ -26,8 +30,14 @@ const LABEL_MAP: Record<PAYMENT, string> = {
   OTHER: 'אחר',
 };
 
-export const UpsertMilestonePayment = () => {
+interface UpsertMilestonePaymentProps {
+  expenseId: string;
+}
+
+export const UpsertMilestonePayment = ({ expenseId }: UpsertMilestonePaymentProps) => {
   const [paymentType, setPaymentType] = useState<PAYMENT | undefined>(undefined);
+
+  const router = useRouter();
 
   const {
     register,
@@ -35,19 +45,42 @@ export const UpsertMilestonePayment = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useForm<CreateMilestone>({
+  } = useForm<CreateMilestonePayment>({
     resolver: zodResolver(createMilestonePaymentSchema),
     defaultValues: {
       title: '',
       amount: '',
-      paymentType: PAYMENT.CASH,
       date: new Date(),
       description: '',
     },
   });
 
-  const onSubmit = (data: CreateMilestone) => {
-    console.log(data);
+  const { mutate: createMilestonePayment, isPending } = useMutation({
+    mutationKey: ['create-milestone-payment'],
+    mutationFn: createMilestonePaymentAction,
+    onError: (error) => {
+      console.error(error);
+      toast.error('אירעה שגיאה ביצירת הוצאה חדשה, אנא נסה שוב מאוחר יותר.');
+    },
+    onSuccess: ({ success, error }) => {
+      if (!success) {
+        toast.error(error);
+        return;
+      }
+      toast.success('מפרעה חדשה נוצרה בהצלחה.');
+      router.push('/dashboard');
+    },
+  });
+
+  const onSubmit = (data: CreateMilestonePayment) => {
+    if (!paymentType) {
+      toast.error('אנא בחר אופן תשלום.');
+      return;
+    }
+
+    const payload = { ...data, paymentType, expenseId };
+
+    createMilestonePayment(payload);
   };
 
   return (
@@ -127,7 +160,13 @@ export const UpsertMilestonePayment = () => {
         )}
       </div>
 
-      <Button type="submit" className="w-44">
+      <Button
+        type="submit"
+        className="w-44"
+        disabled={isPending}
+        isLoading={isPending}
+        loadingText="נוצרת מפרעה חדשה"
+      >
         יצירת מפרעה חדשה
       </Button>
     </form>
