@@ -128,3 +128,104 @@ export const deleteMilestonePaymentAction = async (milestonePaymentId: string) =
     };
   }
 };
+
+export const updateMilestonePaymentAction = async (
+  milestonePayment: CreateMilestonePayment & {
+    expenseId: string;
+    paymentType: PAYMENT;
+    milestonePaymentId: string;
+  }
+) => {
+  try {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const { expenseId, paymentType, milestonePaymentId } = milestonePayment;
+
+    if (!expenseId) {
+      throw new Error('Expense ID not found');
+    }
+
+    const expense = await db.expense.findFirst({
+      where: {
+        id: expenseId,
+        userId: user.id,
+      },
+    });
+
+    if (!expense) {
+      throw new Error('Expense not found');
+    }
+
+    const milestonePaymentExist = await db.milestonePayment.findFirst({
+      where: {
+        id: milestonePaymentId,
+        expense: {
+          userId: user.id,
+        },
+      },
+    });
+
+    if (!milestonePaymentExist) {
+      throw new Error('Milestone payment not found');
+    }
+
+    await db.expense.update({
+      where: {
+        id: expenseId,
+        userId: user.id,
+      },
+      data: {
+        totalMilestonePayment: {
+          decrement: milestonePaymentExist.paidAmount,
+        },
+        remaining: {
+          increment: milestonePaymentExist.paidAmount,
+        },
+      },
+    });
+
+    await db.milestonePayment.update({
+      where: {
+        id: milestonePaymentId,
+      },
+      data: {
+        title: milestonePayment.title,
+        paidAmount: parseFloat(milestonePayment.amount),
+        paymentType,
+        date: milestonePayment.date,
+        description: milestonePayment.description || null,
+      },
+    });
+
+    await db.expense.update({
+      where: {
+        id: expenseId,
+        userId: user.id,
+      },
+      data: {
+        totalMilestonePayment: {
+          increment: parseFloat(milestonePayment.amount),
+        },
+        remaining: {
+          decrement: parseFloat(milestonePayment.amount),
+        },
+      },
+    });
+
+    revalidatePath('/dashboard');
+
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      success: false,
+      error: 'משהו השתבש, נסה שוב מאוחר יותר.',
+    };
+  }
+};

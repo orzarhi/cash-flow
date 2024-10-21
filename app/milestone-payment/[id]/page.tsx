@@ -8,9 +8,13 @@ interface PageProps {
   params: {
     id: string;
   };
+  searchParams: {
+    [key: string]: string | undefined;
+  };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
+  console.log('🚀 ~ Page ~ searchParams:', searchParams);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -27,6 +31,29 @@ export default async function Page({ params }: PageProps) {
 
   if (!expense) {
     return notFound();
+  }
+
+  if (Object.keys(searchParams).length) {
+    const { milestonePaymentId } = searchParams;
+
+    const milestonePayment = await db.milestonePayment.findFirst({
+      where: {
+        expenseId: expense.id,
+        id: milestonePaymentId,
+      },
+    });
+
+    return (
+      <main className="min-h-screen space-y-4 mt-8">
+        <h1 className="sm:text-2xl text-xl">
+          עדכון מפרעה ל{expense.supplierName} ({expense.profession})
+        </h1>
+        <UpsertMilestonePayment
+          expenseId={expense.id}
+          milestonePayment={milestonePayment}
+        />
+      </main>
+    );
   }
 
   return (

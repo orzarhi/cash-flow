@@ -12,15 +12,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  useCreateMilestonePayment,
+  useUpdateMilestonePayment,
+} from '@/hooks/use-milestone-payment';
 import { CreateMilestonePayment, createMilestonePaymentSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PAYMENT } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { MilestonePayment, PAYMENT } from '@prisma/client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { createMilestonePaymentAction } from './actions';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 export const LABEL_MAP: Record<PAYMENT, string> = {
   CASH: 'מזומן',
@@ -32,12 +33,14 @@ export const LABEL_MAP: Record<PAYMENT, string> = {
 
 interface UpsertMilestonePaymentProps {
   expenseId: string;
+  milestonePayment?: MilestonePayment | null;
 }
 
-export const UpsertMilestonePayment = ({ expenseId }: UpsertMilestonePaymentProps) => {
-  const [paymentType, setPaymentType] = useState<PAYMENT | undefined>(undefined);
-
-  const router = useRouter();
+export const UpsertMilestonePayment = ({
+  expenseId,
+  milestonePayment,
+}: UpsertMilestonePaymentProps) => {
+  const [paymentType, setPaymentType] = useState<PAYMENT | undefined>(milestonePayment?.paymentType || undefined);
 
   const {
     register,
@@ -48,39 +51,51 @@ export const UpsertMilestonePayment = ({ expenseId }: UpsertMilestonePaymentProp
   } = useForm<CreateMilestonePayment>({
     resolver: zodResolver(createMilestonePaymentSchema),
     defaultValues: {
-      title: '',
-      amount: '',
-      date: new Date(),
-      description: '',
+      title: milestonePayment?.title || '',
+      amount: milestonePayment?.paidAmount.toString() || '',
+      date: milestonePayment?.date || new Date(),
+      description: milestonePayment?.description || '',
     },
   });
 
-  const { mutate: createMilestonePayment, isPending } = useMutation({
-    mutationKey: ['create-milestone-payment'],
-    mutationFn: createMilestonePaymentAction,
-    onError: (error) => {
-      console.error(error);
-      toast.error('אירעה שגיאה ביצירת הוצאה חדשה, אנא נסה שוב מאוחר יותר.');
-    },
-    onSuccess: ({ success, error }) => {
-      if (!success) {
-        toast.error(error);
-        return;
-      }
-      toast.success('מפרעה חדשה נוצרה בהצלחה.');
-      router.push('/dashboard');
-    },
-  });
+  const { mutate: createMilestonePayment, isPending: createIsPending } =
+    useCreateMilestonePayment();
+  const { mutate: updateMilestonePayment, isPending: updateIsPending } =
+    useUpdateMilestonePayment();
+
+  const isPending = createIsPending || updateIsPending;
+  const buttonText = milestonePayment ? 'עדכון מפרעה קיימת' : 'יצירת מפרעה חדשה';
+  const loadingText = milestonePayment ? 'מעדכן מפרעה קיימת' : 'נוצרת מפרעה חדשה';
+
 
   const onSubmit = (data: CreateMilestonePayment) => {
-    if (!paymentType) {
-      toast.error('אנא בחר אופן תשלום.');
-      return;
+    // Create a new milestone payment
+    if (!milestonePayment) {
+      if (!paymentType) {
+        toast.error('אנא בחר אופן תשלום.');
+        return;
+      }
+
+      const payload = { ...data, paymentType, expenseId };
+
+      createMilestonePayment(payload);
     }
 
-    const payload = { ...data, paymentType, expenseId };
+    // Update an existing milestone payment
+    else {
+      if (!paymentType) {
+        toast.error('אנא בחר אופן תשלום.');
+        return;
+      }
+      const payload = {
+        ...data,
+        paymentType,
+        expenseId,
+        milestonePaymentId: milestonePayment.id,
+      };
 
-    createMilestonePayment(payload);
+      updateMilestonePayment(payload);
+    }
   };
 
   return (
@@ -120,6 +135,7 @@ export const UpsertMilestonePayment = ({ expenseId }: UpsertMilestonePaymentProp
           dir="rtl"
           value={paymentType}
           onValueChange={(value) => setPaymentType(value as PAYMENT)}
+          defaultValue={milestonePayment?.paymentType}
         >
           <SelectTrigger className="w-full ">
             <SelectValue placeholder="בחר אופן תשלום" />
@@ -165,9 +181,9 @@ export const UpsertMilestonePayment = ({ expenseId }: UpsertMilestonePaymentProp
         className="w-44"
         disabled={isPending}
         isLoading={isPending}
-        loadingText="נוצרת מפרעה חדשה"
+        loadingText={loadingText}
       >
-        יצירת מפרעה חדשה
+        {buttonText}
       </Button>
     </form>
   );
