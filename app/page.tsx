@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { buttonVariants } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -11,7 +11,7 @@ export default async function Home() {
     <main className="flex flex-col justify-center items-center min-h-screen text-center space-y-16 px-2">
       <section className="w-full max-w-4xl px-4 mt-8 md:mt-0">
         <div className="flex justify-center gap-2  mt-7 items-center">
-          <Image
+          <img
             src="/logo.webp"
             className="inline-block"
             alt="Cash Flow Logo"
@@ -29,7 +29,7 @@ export default async function Home() {
       <section className="w-full max-w-7xl px-4">
         <div className="absolute mx-auto left-0 right-0 -mt-5">
           <h2 className="text-3xl font-bold">תכונות עיקריות</h2>
-          <Image
+          <img
             src="/line.png"
             alt="line"
             className="relative mx-auto bottom-12"
