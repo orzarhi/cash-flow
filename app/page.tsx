@@ -86,7 +86,7 @@ export default async function Home() {
           </Link>
         ) : (
           <Link
-            href="/expense/create"
+            href="/expense/upsert"
             className={buttonVariants({
               className: 'w-48 my-4 mb-8',
             })}
