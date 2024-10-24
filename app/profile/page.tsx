@@ -1,5 +1,6 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { format } from 'date-fns';
@@ -84,11 +85,20 @@ export default async function Page() {
         )}
       </div>
 
-      <div className="border-b border-muted-foreground my-4 opacity-30" />
-      <h2 className="text-lg font-bold">הגדרות</h2>
-      <div className="space-y-2">
-        <ModeToggle />
-      </div>
+        <h2 className="text-lg font-bold">הגדרות</h2>
+        <div className="flex items-center justify-between mt-4">
+          <a
+            href="/api/auth/logout"
+            className={buttonVariants({
+              size: 'sm',
+              variant: 'secondary',
+              className: '',
+            })}
+          >
+            יציאה
+          </a>
+          <ModeToggle />
+        </div>
     </main>
   );
 }
