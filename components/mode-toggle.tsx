@@ -5,7 +5,11 @@ import { Monitor, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
 
-export const ModeToggle = () => {
+interface ModeToggleProps {
+  className?: string;
+}
+
+export const ModeToggle = ({ className }: ModeToggleProps) => {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -22,7 +26,7 @@ export const ModeToggle = () => {
   ];
 
   return (
-    <div className="flex items-center justify-center border rounded-full p-1">
+    <div className={cn('flex', className)}>
       {OPTIONS.map(({ icon: Icon, theme: optionTheme }) => (
         <button
           key={optionTheme}

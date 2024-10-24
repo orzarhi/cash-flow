@@ -39,7 +39,16 @@ export const Navbar = async () => {
                       variant: 'ghost',
                     })}
                   >
-                    מרכז ניהול ✨
+                    מרכז ניהול
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className={buttonVariants({
+                      size: 'sm',
+                      variant: 'ghost',
+                    })}
+                  >
+                    פרופיל
                   </Link>
                   <a
                     href="/api/auth/logout"

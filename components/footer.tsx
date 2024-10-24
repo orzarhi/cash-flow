@@ -26,7 +26,9 @@ export const Footer = () => {
           Privacy
         </Link>
       </nav>
-      <ModeToggle />
+      <div className='hidden sm:block'>
+        <ModeToggle className='items-center justify-center border rounded-full p-1'/>
+      </div>
     </footer>
   );
 };
