@@ -1,16 +1,17 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { Providers } from '@/components/providers';
 import { Footer } from '@/components/footer';
-import { Recursive } from 'next/font/google';
 import { Navbar } from '@/components/navbar';
+import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/sonner';
+import type { Metadata } from 'next';
+import { Recursive } from 'next/font/google';
+import './globals.css';
 
 const inter = Recursive({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Cash Flow',
-  description: 'נהל את הוצאות בניית הבית שלך בצורה פשוטה ויעילה. דע לאן כל שקל נעלם ותקבל תמונה ברורה על התקציב שלך.',
+  description:
+    'נהל את הוצאות בניית הבית שלך בצורה פשוטה ויעילה. דע לאן כל שקל נעלם ותקבל תמונה ברורה על התקציב שלך.',
 };
 
 export default function RootLayout({
