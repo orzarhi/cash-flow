@@ -22,7 +22,7 @@ export const BottomNavigation = () => {
       icon: <Plus className="size-6" />,
     },
     { href: '/profile', icon: <User className="size-6" /> },
-    { href: '/api/auth/logout', icon: <LogOut className="size-6" /> },
+    { href: '/', icon: <LogOut className="size-6" /> },
   ];
 
   useEffect(() => {
