@@ -33,6 +33,7 @@ export default async function Page() {
       amount: true,
       deposit: true,
       remaining: true,
+      profession: true,
       totalMilestonePayment: true,
     },
     orderBy: {
@@ -89,10 +90,8 @@ export default async function Page() {
         <TableHeader>
           <TableRow>
             <TableHead className="text-right">שם</TableHead>
-            <TableHead className="text-right">סכום כולל</TableHead>
-            <TableHead className="text-right">מקדמה</TableHead>
-            <TableHead className="text-right">מפרעות</TableHead>
-            <TableHead className="text-right">יתרה</TableHead>
+            <TableHead className="text-center">מקצוע</TableHead>
+            <TableHead className="text-center">סכום כולל</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -101,33 +100,23 @@ export default async function Page() {
               <TableCell>
                 <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
               </TableCell>
-              <TableCell className={cn('',{
+              <TableCell className="text-center">
+                <Link href={`/expense/${expense.id}`}>
+                  {expense.profession}
+                </Link>
+              </TableCell >
+              <TableCell className={cn('text-center',{
                 'text-green-500': expense.remaining === 0,
               })}>
                 <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
-              </TableCell>
-              <TableCell>
-                <Link href={`/expense/${expense.id}`}>
-                  {formatPrice(expense.deposit ?? 0)}
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href={`/expense/${expense.id}`}>
-                  {formatPrice(expense.totalMilestonePayment ?? 0)}
-                </Link>
-              </TableCell>
-              <TableCell className="text-right">
-                <Link href={`/expense/${expense.id}`}>
-                  {formatPrice(expense.remaining ?? 0)}
-                </Link>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={1}>סה״כ הוצאות</TableCell>
-            <TableCell className="text-red-500">{formatPrice(totalExpenses)}</TableCell>
+            <TableCell colSpan={2}>סה״כ הוצאות</TableCell>
+            <TableCell className="text-red-500 text-center">{formatPrice(totalExpenses)}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

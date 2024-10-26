@@ -34,8 +34,8 @@ export const MilestonePaymentMoreDetails = ({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [milestonePaymentId, setMilestonePaymentId] = useState<string | null>(null);
 
-
-  const { mutate: deleteMilestonePayment, isPending } = useDeleteMilestonePayment(setMilestonePaymentId);
+  const { mutate: deleteMilestonePayment, isPending } =
+    useDeleteMilestonePayment(setMilestonePaymentId);
 
   return (
     <>
@@ -60,10 +60,7 @@ export const MilestonePaymentMoreDetails = ({
           </h1>
           <div className="space-y-4">
             {expense.milestonePayment.map((milestone, index) => (
-              <div
-                key={milestone.id}
-                className="border-b last:border-0 p-4 rounded-lg shadow-sm"
-              >
+              <div key={milestone.id} className="p-4 shadow-sm">
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-lg font-medium">
                     {index + 1}. {milestone.title}

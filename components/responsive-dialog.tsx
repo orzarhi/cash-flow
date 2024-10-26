@@ -7,6 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle
+} from '@/components/ui/drawer';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
@@ -27,30 +34,54 @@ export const ResponsiveDialog = ({
   description,
   textCenter,
 }: ResponsiveDialogProps) => {
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  if (isDesktop) {
+    return (
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent
+          className={cn(
+            'sm:max-w-[600px] w-[95%] p-1 mt-5 rounded-md max-h-[80vh] overflow-y-auto',
+            {
+              'text-center': textCenter,
+            }
+          )}
+        >
+          <DialogHeader>
+            <DialogTitle className="text-center">{title}</DialogTitle>
+            {description && (
+              <DialogDescription
+                className={cn('!text-muted-foreground', {
+                  'text-center': textCenter,
+                })}
+              >
+                {description}
+              </DialogDescription>
+            )}
+          </DialogHeader>
+          {children}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent
-        className={cn(
-          'sm:max-w-[600px] w-[95%] p-1 mt-5 rounded-md max-h-[80vh] overflow-y-auto',
-          {
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerContent className="">
+        <DrawerHeader
+          className={cn('text-left', {
             'text-center': textCenter,
-          }
-        )}
-      >
-        <DialogHeader>
-          <DialogTitle className="text-center">{title}</DialogTitle>
+          })}
+        >
+          <DrawerTitle>{title}</DrawerTitle>
           {description && (
-            <DialogDescription
-              className={cn('!text-muted-foreground', {
-                'text-center': textCenter,
-              })}
-            >
+            <DialogDescription className="text-muted-foreground">
               {description}
             </DialogDescription>
           )}
-        </DialogHeader>
-        {children}
-      </DialogContent>
-    </Dialog>
+        </DrawerHeader>
+        <div className="max-h-[80vh] overflow-y-auto p-2">{children}</div>
+      </DrawerContent>
+    </Drawer>
   );
 };

@@ -11,7 +11,6 @@ export const createExpenseSchema = z.object({
 
   phoneNumber: z
     .string()
-    .min(1, 'מספר טלפון הוא שדה חובה.')
     .max(10, 'מספר טלפון יכול להכיל עד 10 ספרות.')
     .optional()
     .refine((value) => !value || /^\d+$/.test(value), 'מספר טלפון יכול להכיל רק מספרים.'),
