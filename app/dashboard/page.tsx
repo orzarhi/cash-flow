@@ -66,7 +66,6 @@ export default async function Page() {
     );
   }
 
-
   const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
 
   return (
@@ -91,7 +90,7 @@ export default async function Page() {
           <TableRow>
             <TableHead className="text-right">שם</TableHead>
             <TableHead className="text-center">מקצוע</TableHead>
-            <TableHead className="text-center">סכום כולל</TableHead>
+            <TableHead className="text-center">סכום</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -101,13 +100,13 @@ export default async function Page() {
                 <Link href={`/expense/${expense.id}`}>{expense.supplierName}</Link>
               </TableCell>
               <TableCell className="text-center">
-                <Link href={`/expense/${expense.id}`}>
-                  {expense.profession}
-                </Link>
-              </TableCell >
-              <TableCell className={cn('text-center',{
-                'text-green-500': expense.remaining === 0,
-              })}>
+                <Link href={`/expense/${expense.id}`}>{expense.profession}</Link>
+              </TableCell>
+              <TableCell
+                className={cn('text-center', {
+                  'text-green-500': expense.remaining === 0,
+                })}
+              >
                 <Link href={`/expense/${expense.id}`}>{formatPrice(expense.amount)}</Link>
               </TableCell>
             </TableRow>
@@ -116,7 +115,9 @@ export default async function Page() {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>סה״כ הוצאות</TableCell>
-            <TableCell className="text-red-500 text-center">{formatPrice(totalExpenses)}</TableCell>
+            <TableCell className="text-red-500 text-center">
+              {formatPrice(totalExpenses)}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
