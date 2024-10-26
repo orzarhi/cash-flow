@@ -1,6 +1,6 @@
 {
-  "name": "My awesome PWA app",
-  "short_name": "PWA App",
+  "name": "Cash Flow",
+  "short_name": "Cash Flow",
   "icons": [
     {
       "src": "/logo.webp",
@@ -20,7 +20,7 @@
     }
   ],
   "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
+  "background_color": "",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait"
