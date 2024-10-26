@@ -45,15 +45,15 @@ export const BottomNavigation = () => {
   return (
     <nav
       className={cn(
-        'fixed left-0 bottom-0 w-full bg-background h-14 border-t border-muted shadow-md z-10 transition-transform duration-300',
+        'fixed left-0 bottom-0 w-full bg-background h-16 border-t border-muted shadow-md z-10 transition-transform duration-300',
         {
           'transform translate-y-full': !showNav,
         }
       )}
     >
       <ul className="flex justify-between items-center text-muted-foreground w-full">
-        {navItems.map((item) => (
-          <li key={item.href} className="flex-1 text-center">
+        {navItems.map((item, index) => (
+          <li key={index} className="flex-1 text-center">
             <Link
               href={item.href}
               className={cn('flex flex-col items-center py-3', {
@@ -61,7 +61,7 @@ export const BottomNavigation = () => {
                 'text-primary': item.href === '/expense/upsert',
               })}
             >
-              <span className=''>{item.icon}</span>
+              <span className="">{item.icon}</span>
             </Link>
           </li>
         ))}
