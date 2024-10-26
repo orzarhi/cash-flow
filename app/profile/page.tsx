@@ -6,8 +6,18 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User } from '@prisma/client';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import { SkeletonLoading } from './skeleton-loading';
 
 export default async function Page() {
+  return (
+    <Suspense fallback={<SkeletonLoading />}>
+      <GetData />
+    </Suspense>
+  );
+}
+
+const GetData = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -153,4 +163,4 @@ export default async function Page() {
       </div>
     </main>
   );
-}
+};

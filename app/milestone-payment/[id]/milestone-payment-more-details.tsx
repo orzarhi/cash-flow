@@ -86,20 +86,21 @@ export const MilestonePaymentMoreDetails = ({
                     <Link
                       href={`/milestone-payment/${expense.id}?milestonePaymentId=${milestone.id}`}
                       className={buttonVariants({
-                        variant: 'ghost',
+                        variant: 'link',
+                        size: 'icon',
                       })}
                     >
-                      <Pencil />
+                      <Pencil className='mr-auto'/>
                     </Link>
                     <Button
                       size="icon"
-                      variant="ghost"
+                      variant="link"
                       onClick={() => deleteMilestonePayment(milestone.id)}
                     >
                       {isPending && milestonePaymentId === milestone.id ? (
-                        <Loader2 className="text-red-500 animate-spin" />
+                        <Loader2 className="text-red-500 animate-spin mr-auto" />
                       ) : (
-                        <Trash2 className="text-red-500" />
+                        <Trash2 className="text-red-500 mr-auto" />
                       )}
                     </Button>
                   </div>

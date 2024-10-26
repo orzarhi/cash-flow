@@ -21,7 +21,7 @@ export const BottomNavigation = () => {
       href: '/expense/upsert',
       icon: <Plus className="size-6" />,
     },
-    { href: '/statistics', icon: <ChartSpline  className="size-6" /> },
+    { href: '/statistics', icon: <ChartSpline className="size-6" /> },
     { href: '/profile', icon: <User className="size-6" /> },
   ];
 
@@ -45,7 +45,7 @@ export const BottomNavigation = () => {
   return (
     <nav
       className={cn(
-        'fixed left-0 bottom-0 w-full bg-background h-16 border-t border-muted shadow-md z-10 transition-transform duration-300',
+        'fixed left-0 bottom-0 w-full bg-background h-20 border-t border-muted shadow-md z-10 transition-transform duration-300',
         {
           'transform translate-y-full': !showNav,
         }
@@ -58,6 +58,7 @@ export const BottomNavigation = () => {
               href={item.href}
               className={cn('flex flex-col items-center py-3 mt-1', {
                 'text-black dark:text-white': pathname === item.href,
+
                 'bg-primary rounded-full text-white w-2/3 mx-auto':
                   item.href === '/expense/upsert',
               })}

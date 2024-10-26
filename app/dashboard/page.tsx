@@ -14,8 +14,18 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { CirclePlus, Ghost } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import { SkeletonLoading } from './skeleton-loading';
 
 export default async function Page() {
+  return (
+    <Suspense fallback={<SkeletonLoading />}>
+      <GetData />
+    </Suspense>
+  );
+}
+
+const GetData = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -123,4 +133,4 @@ export default async function Page() {
       </Table>
     </main>
   );
-}
+};

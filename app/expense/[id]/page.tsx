@@ -9,6 +9,8 @@ import { notFound } from 'next/navigation';
 import { DropdownOptions } from './dropdown-options';
 import { CollapsibleDescription } from './collapsible-description';
 import { MilestonePaymentMoreDetails } from '@/app/milestone-payment/[id]/milestone-payment-more-details';
+import { Suspense } from 'react';
+import { SkeletonLoading } from './skeleton-loading';
 interface PageProps {
   params: {
     id: string;
@@ -16,6 +18,14 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
+  return (
+    <Suspense fallback={<SkeletonLoading />}>
+      <GetData id={params.id} />
+    </Suspense>
+  );
+}
+
+const GetData = async ({ id }: { id: string }) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -26,7 +36,7 @@ export default async function Page({ params }: PageProps) {
   const expense = await db.expense.findFirst({
     where: {
       userId: user.id,
-      id: params.id,
+      id,
     },
     select: {
       id: true,
@@ -73,9 +83,13 @@ export default async function Page({ params }: PageProps) {
 
         <div className="flex justify-between">
           <h2>סכום כולל:</h2>
-          <p className={cn('',{
-            'text-green-500': expense.remaining === 0,
-          })}>{formatPrice(expense.amount)}</p>
+          <p
+            className={cn('', {
+              'text-green-500': expense.remaining === 0,
+            })}
+          >
+            {formatPrice(expense.amount)}
+          </p>
         </div>
 
         <div className="flex justify-between">
@@ -119,4 +133,4 @@ export default async function Page({ params }: PageProps) {
       </div>
     </main>
   );
-}
+};
