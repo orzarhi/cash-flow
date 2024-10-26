@@ -1,21 +1,33 @@
 import { useState, useEffect } from 'react';
 
 export const useScrollReload = () => {
-  const [scrollPos, setScrollPos] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-
-      if (currentScrollPos === 0 && scrollPos > 50) {
-        window.location.reload();
-      }
-
-      setScrollPos(currentScrollPos);
+    const handleTouchStart = (e: TouchEvent) => {
+      setTouchStart(e.touches[0].clientY); // נקודת התחלה של הנגיעה
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleTouchMove = (e: TouchEvent) => {
+      setTouchEnd(e.touches[0].clientY); // מעדכן את המיקום הנוכחי של הנגיעה
+    };
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollPos]);
+    const handleTouchEnd = () => {
+      if (touchStart < touchEnd - 50 && window.scrollY === 0) {
+        // בודק אם יש "משיכה כלפי מטה" כשהעמוד נמצא למעלה
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [touchStart, touchEnd]);
 };
