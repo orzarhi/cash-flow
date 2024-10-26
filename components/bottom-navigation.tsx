@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Home, LayoutDashboard, SquarePen, User } from 'lucide-react';
+import { Home, LayoutDashboard, LogOut, Plus, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,18 +12,17 @@ export const BottomNavigation = () => {
   const [showNav, setShowNav] = useState(true);
 
   const navItems = [
-    { name: 'בית', href: '/', icon: <Home className="size-5" /> },
+    { href: '/', icon: <Home className="size-6" /> },
     {
-      name: 'מרכז ניהול',
       href: '/dashboard',
-      icon: <LayoutDashboard className="size-5" />,
+      icon: <LayoutDashboard className="size-6" />,
     },
     {
-      name: 'הוצאה חדשה',
       href: '/expense/upsert',
-      icon: <SquarePen className="size-5" />,
+      icon: <Plus className="size-6" />,
     },
-    { name: 'פרופיל', href: '/profile', icon: <User className="size-5" /> },
+    { href: '/profile', icon: <User className="size-6" /> },
+    { href: '/api/auth/logout', icon: <LogOut className="size-6" /> },
   ];
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export const BottomNavigation = () => {
   return (
     <nav
       className={cn(
-        'fixed left-0 bottom-0 w-full bg-background h-[4.5rem] border-t border-muted shadow-md z-10 transition-transform duration-300',
+        'fixed left-0 bottom-0 w-full bg-background h-14 border-t border-muted shadow-md z-10 transition-transform duration-300',
         {
           'transform translate-y-full': !showNav,
         }
@@ -54,15 +53,15 @@ export const BottomNavigation = () => {
     >
       <ul className="flex justify-between items-center text-muted-foreground w-full">
         {navItems.map((item) => (
-          <li key={item.name} className="flex-1 text-center">
+          <li key={item.href} className="flex-1 text-center">
             <Link
               href={item.href}
               className={cn('flex flex-col items-center py-3', {
                 'text-black dark:text-white': pathname === item.href,
+                'text-primary': item.href === '/expense/upsert',
               })}
             >
-              <span>{item.icon}</span>
-              <span className="text-sm">{item.name}</span>
+              <span className=''>{item.icon}</span>
             </Link>
           </li>
         ))}

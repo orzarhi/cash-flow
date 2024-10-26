@@ -1,6 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { format } from 'date-fns';
@@ -76,7 +75,7 @@ export default async function Page() {
         {expenses ? (
           expenses.map((expense) => (
             <p className="text-muted-foreground" key={expense.id}>
-              - {expense.supplierName} בתאריך{' '}
+              - {expense.supplierName},{' '}
               {format(new Date(expense.createdAt), 'dd/MM/yyyy')}
             </p>
           ))
@@ -85,20 +84,10 @@ export default async function Page() {
         )}
       </div>
 
-        <h2 className="text-lg font-bold">הגדרות</h2>
-        <div className="flex items-center justify-between mt-4">
-          <a
-            href="/api/auth/logout"
-            className={buttonVariants({
-              size: 'sm',
-              variant: 'secondary',
-              className: '',
-            })}
-          >
-            יציאה
-          </a>
-          <ModeToggle />
-        </div>
+      <h2 className="text-lg font-bold">הגדרות</h2>
+      <div className="flex items-center justify-between mt-4">
+        <ModeToggle />
+      </div>
     </main>
   );
 }
