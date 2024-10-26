@@ -45,7 +45,7 @@ export const BottomNavigation = () => {
   return (
     <nav
       className={cn(
-        'fixed left-0 bottom-0 w-full backdrop-blur-lg transition-all h-20 border-t shadow-md z-10  duration-300',
+        'fixed left-0 bottom-0 w-full bg-background h-20 border-t border-muted shadow-md z-10 transition-transform duration-300',
         {
           'transform translate-y-full': !showNav,
         }

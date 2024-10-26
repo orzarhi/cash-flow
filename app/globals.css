@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-  /* overscroll-behavior: none; */
+html {
+  overscroll-behavior: none;
+}
+body {
+  overscroll-behavior: none;
   --webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: contain;
 }
 
 @layer utilities {
@@ -14,7 +15,6 @@ body{
     text-wrap: balance;
   }
 }
-
 
 @layer base {
   :root {
@@ -73,7 +73,6 @@ body{
   }
 }
 
-
 @layer base {
   * {
     @apply border-border;
@@ -91,7 +90,7 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--foreground) !important;
 }
 
-.ltr{
+.ltr {
   direction: ltr;
 }
 

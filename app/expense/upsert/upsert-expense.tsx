@@ -3,11 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateExpense } from '@/hooks/use-expense';
 import { CreateExpense, createExpenseSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Expense } from '@prisma/client';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface UpsertExpenseProps {
@@ -15,6 +17,8 @@ interface UpsertExpenseProps {
 }
 
 export const UpsertExpense = ({ expense }: UpsertExpenseProps) => {
+  const [workProgress, setWorkProgress] = useState<number>(expense?.workProgress || 0);
+
   const {
     register,
     handleSubmit,
@@ -112,7 +116,20 @@ export const UpsertExpense = ({ expense }: UpsertExpenseProps) => {
         />
         {errors.deposit && <p className="error-message">{errors.deposit.message}</p>}
       </div>
-
+      {expense && (
+        <div className="space-y-1.5">
+          <Label className="font-semibold" htmlFor="workProgress">
+            תהליך התקדמות ({workProgress.toString()}%)
+          </Label>
+          <Slider
+            id="workProgress"
+            defaultValue={[workProgress]}
+            max={100}
+            step={1}
+            onValueChange={(value) => setWorkProgress(value[0])}
+          />
+        </div>
+      )}
       <div className="space-y-1.5">
         <Label className="font-semibold" htmlFor="description">
           הערות

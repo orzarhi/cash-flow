@@ -109,7 +109,7 @@ const GetData = async ({ id }: { id: string }) => {
 
         <div className="flex justify-between">
           <h2>תהליך התקדמות:</h2>
-          <p>{expense.workProgress ?? '0%'}</p>
+          <p>{expense.workProgress ?? '0%'}%</p>
         </div>
 
         <CollapsibleDescription description={expense.description} />

@@ -11,13 +11,6 @@ export default async function Home() {
     <main className="flex flex-col justify-center items-center min-h-screen text-center space-y-16 px-2">
       <section className="w-full max-w-4xl px-4 md:mt-0">
         <div className="flex justify-center gap-2  mt-7 items-center">
-          {/* <Image
-            src="/logo.webp"
-            className="inline-block"
-            alt="Cash Flow Logo"
-            width={50}
-            height={50}
-          /> */}
           <h1 className="text-4xl md:text-6xl font-bold">Cash-Flow</h1>
         </div>
         <p className="text-lg md:text-xl mt-4">
