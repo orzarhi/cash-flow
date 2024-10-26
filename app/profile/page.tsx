@@ -2,6 +2,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { User } from '@prisma/client';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 
@@ -45,6 +46,25 @@ export default async function Page() {
 
   const nameFallback = `${user.given_name?.[0]}${user.family_name?.[0]}`;
 
+  const admin = process.env.ADMIN_EMAIL === currentUser.email;
+
+  let users: Omit<User, 'updatedAt'>[] | undefined;
+
+  if (admin) {
+    users = await db.user.findMany({
+      where: {
+        NOT: {
+          email: currentUser.email,
+        },
+      },
+      select: {
+        id: true,
+        email: true,
+        imageUrl: true,
+        createdAt: true,
+      },
+    });
+  }
   return (
     <main className="min-h-screen space-y-4 mt-8">
       <div className="flex items-center gap-4">
@@ -70,14 +90,44 @@ export default async function Page() {
         <div className="border-b border-muted-foreground my-4 opacity-30" />
       </div>
 
+      {admin && (
+        <>
+          <h2 className="text-lg font-bold">משתמשים ({users?.length})</h2>
+          <div className="space-y-2">
+            {users ? (
+              users.map((user) => (
+                <div key={user.id} className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="size-6">
+                      <AvatarFallback>{user.email[0].toLocaleUpperCase()}</AvatarFallback>
+                      <AvatarImage
+                        className="no-draggable"
+                        src={user.imageUrl as string}
+                        alt="avatar-image"
+                      />
+                    </Avatar>
+                    <p>{user.email}</p>
+                  </div>
+                  <p className="text-muted-foreground">
+                    {format(new Date(user.createdAt), 'dd/MM/yyyy')}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="text-muted-foreground">לא קיימים משתמשים נוספים.</p>
+            )}
+          </div>
+        </>
+      )}
+
       <h2 className="text-lg font-bold">הוצאות אחרונות ({expenses.length})</h2>
       <div className="space-y-2">
         {expenses ? (
           expenses.map((expense) => (
-            <p className="text-muted-foreground" key={expense.id}>
-              - {expense.supplierName},{' '}
-              {format(new Date(expense.createdAt), 'dd/MM/yyyy')}
-            </p>
+            <div key={expense.id} className="flex justify-between">
+              <p>{expense.supplierName}</p>
+              <p className="text-muted-foreground">{format(new Date(expense.createdAt), 'dd/MM/yyyy')}</p>
+            </div>
           ))
         ) : (
           <p className="text-muted-foreground">לא קיימות הוצאות אחרונות.</p>
