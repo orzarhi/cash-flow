@@ -80,7 +80,7 @@ export const ResponsiveDialog = ({
             </DialogDescription>
           )}
         </DrawerHeader>
-        <div className="max-h-[80vh] overflow-y-auto p-2">{children}</div>
+        <div className="max-h-[70vh] overflow-y-auto p-2">{children}</div>
       </DrawerContent>
     </Drawer>
   );
