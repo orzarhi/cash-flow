@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Home, LayoutDashboard, LogOut, Plus, User } from 'lucide-react';
+import { ChartSpline, Home, LayoutDashboard, Plus, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -21,8 +21,8 @@ export const BottomNavigation = () => {
       href: '/expense/upsert',
       icon: <Plus className="size-6" />,
     },
+    { href: '/statistics', icon: <ChartSpline  className="size-6" /> },
     { href: '/profile', icon: <User className="size-6" /> },
-    { href: '/', icon: <LogOut className="size-6" /> },
   ];
 
   useEffect(() => {
@@ -56,9 +56,10 @@ export const BottomNavigation = () => {
           <li key={index} className="flex-1 text-center">
             <Link
               href={item.href}
-              className={cn('flex flex-col items-center py-3', {
+              className={cn('flex flex-col items-center py-3 mt-1', {
                 'text-black dark:text-white': pathname === item.href,
-                'text-primary': item.href === '/expense/upsert',
+                'bg-primary rounded-full text-white w-2/3 mx-auto':
+                  item.href === '/expense/upsert',
               })}
             >
               <span className="">{item.icon}</span>

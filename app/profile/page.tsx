@@ -1,5 +1,6 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User } from '@prisma/client';
@@ -126,7 +127,9 @@ export default async function Page() {
           expenses.map((expense) => (
             <div key={expense.id} className="flex justify-between">
               <p>{expense.supplierName}</p>
-              <p className="text-muted-foreground">{format(new Date(expense.createdAt), 'dd/MM/yyyy')}</p>
+              <p className="text-muted-foreground">
+                {format(new Date(expense.createdAt), 'dd/MM/yyyy')}
+              </p>
             </div>
           ))
         ) : (
@@ -136,6 +139,16 @@ export default async function Page() {
 
       <h2 className="text-lg font-bold">הגדרות</h2>
       <div className="flex items-center justify-between mt-4">
+        <a
+          href="/api/auth/logout"
+          className={buttonVariants({
+            size: 'sm',
+            variant: 'secondary',
+            className: '',
+          })}
+        >
+          יציאה
+        </a>
         <ModeToggle />
       </div>
     </main>
