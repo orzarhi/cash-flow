@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
-  overscroll-behavior: none;
-}
+
 body{
-  overscroll-behavior: none;
+  /* overscroll-behavior: none; */
   --webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
 }
 
 @layer utilities {
